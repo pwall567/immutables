@@ -1,5 +1,9 @@
 # immutables
 
+[![Build Status](https://travis-ci.com/pwall567/immutables.svg?branch=main)](https://travis-ci.org/pwall567/immutables)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Maven Central](https://img.shields.io/maven-central/v/net.pwall.util/immutables?label=Maven%20Central)](https://search.maven.org/search?q=g:%22net.pwall.util%22%20AND%20a:%22immutables%22)
+
 High-performance immutable collections
 
 ## Background
