@@ -33,10 +33,10 @@ package net.pwall.util;
  */
 public abstract class ImmutableBase<A> {
 
-    protected static final Object[] emptyArray = new Object[0];
+    static final Object[] emptyArray = new Object[0];
 
-    protected final A[] array;
-    protected final int length;
+    final A[] array;
+    final int length;
 
     /**
      * Construct an {@code ImmutableBase} with the given array and length.
@@ -44,7 +44,7 @@ public abstract class ImmutableBase<A> {
      * @param   array   the array
      * @param   length  the length (the number of array items to be considered part of the collection)
      */
-    protected ImmutableBase(A[] array, int length) {
+    ImmutableBase(A[] array, int length) {
         this.array = array;
         this.length = length;
     }
@@ -85,7 +85,7 @@ public abstract class ImmutableBase<A> {
      * @return              the length
      * @throws  IndexOutOfBoundsException if the length is less than 0 or greater than the array length
      */
-    protected static <T> int checkLength(T[] array, int length) {
+    static <T> int checkLength(T[] array, int length) {
         if (length < 0 || length > array.length)
             throw new IndexOutOfBoundsException(String.valueOf(length));
         return length;

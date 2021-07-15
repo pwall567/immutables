@@ -42,7 +42,7 @@ public abstract class ImmutableCollectionBase<A, E> extends ImmutableBase<A> imp
      * @param   array   the array
      * @param   length  the length (the number of array items to be considered part of the collection)
      */
-    protected ImmutableCollectionBase(A[] array, int length) {
+    ImmutableCollectionBase(A[] array, int length) {
         super(array, length);
     }
 

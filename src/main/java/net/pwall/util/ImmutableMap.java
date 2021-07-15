@@ -482,7 +482,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
          * @param   array       the array of {@link MapEntry}
          * @param   length      the length (the number of array items to be considered part of the map)
          */
-        public KeySet(MapEntry<K, V>[] array, int length) {
+        KeySet(MapEntry<K, V>[] array, int length) {
             super(array, length);
         }
 
@@ -620,7 +620,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
          * @param   array       the array of {@link MapEntry}
          * @param   length      the length (the number of array items to be considered part of the map)
          */
-        public KeyIterator(MapEntry<K, V>[] array, int length) {
+        KeyIterator(MapEntry<K, V>[] array, int length) {
             super(array, length, 0);
         }
 
@@ -653,7 +653,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
          * @param   array       the array of {@link MapEntry}
          * @param   length      the length (the number of array items to be considered part of the map)
          */
-        public ValueCollection(MapEntry<K, V>[] array, int length) {
+        ValueCollection(MapEntry<K, V>[] array, int length) {
             super(array, length);
         }
 
@@ -752,7 +752,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
          * @param   array       the array of {@link MapEntry}
          * @param   length      the length (the number of array items to be considered part of the map)
          */
-        public ValueIterator(MapEntry<K, V>[] array, int length) {
+        ValueIterator(MapEntry<K, V>[] array, int length) {
             super(array, length, 0);
         }
 

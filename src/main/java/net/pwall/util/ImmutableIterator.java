@@ -43,7 +43,7 @@ public class ImmutableIterator<T> extends ImmutableIteratorBase<T> implements It
      * @param   length  the length (the number of array items to be considered part of the collection)
      * @param   index   the starting index
      */
-    public ImmutableIterator(T[] array, int length, int index) {
+    ImmutableIterator(T[] array, int length, int index) {
         super(array, length, index);
     }
 

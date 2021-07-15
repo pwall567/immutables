@@ -36,9 +36,9 @@ import java.util.NoSuchElementException;
  */
 public class ImmutableIteratorBase<T> {
 
-    protected final T[] array;
-    protected final int length;
-    protected int index;
+    final T[] array;
+    final int length;
+    int index;
 
     /**
      * Construct an {@code ImmutableIteratorBase} with the given array and length, and with the given starting index.
@@ -47,7 +47,7 @@ public class ImmutableIteratorBase<T> {
      * @param   length  the length (the number of array items to be considered part of the collection)
      * @param   index   the starting index
      */
-    public ImmutableIteratorBase(T[] array, int length, int index) {
+    ImmutableIteratorBase(T[] array, int length, int index) {
         this.array = array;
         this.length = length;
         this.index = index;
