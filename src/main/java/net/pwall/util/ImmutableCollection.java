@@ -115,6 +115,7 @@ public class ImmutableCollection<T> extends ImmutableCollectionBase<T, T> implem
      * @param   array   the array
      * @param   length  the number of elements in the array to be examined
      * @param   o       the object
+     * @param   <TT>    the type of the array items
      * @return          {@code true} if the collection contains the object
      */
     public static <TT> boolean contains(TT[] array, int length, Object o) {
