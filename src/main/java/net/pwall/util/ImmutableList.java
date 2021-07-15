@@ -1,3 +1,28 @@
+/*
+ * @(#) ImmutableList.java
+ *
+ * immutables  High-performance immutable collections
+ * Copyright (c) 2021 Peter Wall
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package net.pwall.util;
 
 import java.lang.reflect.Array;
@@ -8,22 +33,53 @@ import java.util.ListIterator;
 import java.util.Objects;
 import java.util.RandomAccess;
 
+/**
+ * Immutable implementation of {@link List}.
+ *
+ * @author  Peter Wall
+ * @param   <T>     the list element type
+ */
 public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>, RandomAccess {
 
+    /**
+     * Construct an {@code ImmutableList} with the given array and length.
+     *
+     * @param   array       the array
+     * @param   length      the length (the number of array items to be considered part of the list)
+     */
     public ImmutableList(T[] array, int length) {
         super(array, length);
     }
 
+    /**
+     * Construct an {@code ImmutableList} with the given array (using the entire array).
+     *
+     * @param   array       the array
+     */
     public ImmutableList(T[] array) {
         this(array, array.length);
     }
 
+    /**
+     * Get the element at the specified index.  The function does not check the array index because the indexing
+     * operation on the array will do that anyway.
+     *
+     * @param   index       the index
+     * @return              the element at that index
+     * @throws  IndexOutOfBoundsException   if the index is less than 0 or greater than the length of the list
+     */
     @Override
     public T get(int index) {
-        // no need to check index - array indexing will check anyway
         return array[index];
     }
 
+    /**
+     * Find the index in the list of the first item equal to the given object (either both {@code null}, or equal
+     * according to {@link Object#equals}).
+     *
+     * @param   o       the object to be located
+     * @return          the index, or -1 if not found
+     */
     @Override
     public int indexOf(Object o) {
         if (o == null) {
@@ -39,6 +95,13 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
         return -1;
     }
 
+    /**
+     * Find the index in the list of the last item equal to the given object (either both {@code null}, or equal
+     * according to {@link Object#equals}).
+     *
+     * @param   o       the object to be located
+     * @return          the index, or -1 if not found
+     */
     @Override
     public int lastIndexOf(Object o) {
         if (o == null) {
@@ -54,16 +117,35 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
         return -1;
     }
 
+    /**
+     * Get a {@link ListIterator} over this list.
+     *
+     * @return          the {@link ListIterator}
+     */
     @Override
     public ListIterator<T> listIterator() {
         return new ImmutableListIterator<>(array, length, 0);
     }
 
+    /**
+     * Get a {@link ListIterator} over this list, initialised to the given index.
+     *
+     * @param   index   the starting index
+     * @return          the {@link ListIterator}
+     */
     @Override
     public ListIterator<T> listIterator(int index) {
         return new ImmutableListIterator<>(array, length, index);
     }
 
+    /**
+     * Get a sub-list of this list.
+     *
+     * @param   fromIndex   the starting index of the sub-list
+     * @param   toIndex     the ending index of the sub-list
+     * @return              the sub-list
+     * @throws  IndexOutOfBoundsException   if the index range is not valid
+     */
     @Override
     public ImmutableList<T> subList(int fromIndex, int toIndex) {
         if (fromIndex == 0 && toIndex == length)
@@ -80,15 +162,54 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
     }
 
     /**
+     * Modifying operation - not allowed.
+     *
+     * @throws      UnsupportedOperationException (in all cases)
+     */
+    @Override
+    public void add(int index, T element) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Modifying operation - not allowed.
+     *
+     * @throws      UnsupportedOperationException (in all cases)
+     */
+    @Override
+    public T set(int index, T element) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Modifying operation - not allowed.
+     *
+     * @throws      UnsupportedOperationException (in all cases)
+     */
+    @Override
+    public boolean addAll(int index, Collection<? extends T> c) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Modifying operation - not allowed.
+     *
+     * @throws      UnsupportedOperationException (in all cases)
+     */
+    @Override
+    public T remove(int index) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
      * Compares the specified object with this list for equality.  Returns {@code true} if and only if the specified
      * object is also a list, both lists have the same size, and all corresponding pairs of elements in the two lists
-     * are <i>equal</i>.  (Two elements {@code e1} and {@code e2} are <i>equal</i> if
-     * {@code (e1 == null ? e2 == null : e1.equals(e2))}.)  In other words, two lists are defined to be equal if they
-     * contain the same elements in the same order.  This definition ensures that the equals method works properly
-     * across different implementations of the {@code List} interface.
+     * are equal (that is, both are null or they compare as equal using {@link Object#equals}).  This definition ensures
+     * that the {@link Object#equals} method works properly across different implementations of the {@link List}
+     * interface.
      *
-     * @param   other   the object to be compared for equality with this list
-     * @return  {@code true} if the specified object is equal to this list
+     * @param   other       the object to be compared for equality with this list
+     * @return              {@code true} if the specified object is equal to this list
      */
     @Override
     public boolean equals(Object other) {
@@ -121,6 +242,7 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
      *
      * @return  the hash code value for this list
      */
+    @Override
     public int hashCode() {
         int result = 1;
         for (int i = 0; i < length; i++)
@@ -128,39 +250,38 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
         return result;
     }
 
+    /**
+     * Get an empty {@code ImmutableList}.  This avoids a memory allocation if the list is empty.
+     *
+     * @param   <TT>        the element type
+     * @return              an empty list
+     */
     @SuppressWarnings("unchecked")
     public static <TT> ImmutableList<TT> emptyList() {
         return new ImmutableList<>((TT[])emptyArray);
     }
 
+    /**
+     * Get an {@code ImmutableList} using the supplied array.  If the array length is zero, the empty list is returned.
+     *
+     * @param   array       the array
+     * @param   <TT>        the element type
+     * @return              the list
+     */
     public static <TT> ImmutableList<TT> listOf(TT[] array) {
         return array.length == 0 ? emptyList() : new ImmutableList<>(array, array.length);
     }
 
+    /**
+     * Get an {@code ImmutableList} using the supplied array.  If the array length is zero, the empty list is returned.
+     *
+     * @param   array       the array
+     * @param   length      the length (the number of array items to be considered part of the list)
+     * @param   <TT>        the element type
+     * @return              the list
+     */
     public static <TT> ImmutableList<TT> listOf(TT[] array, int length) {
         return length == 0 ? emptyList() : new ImmutableList<>(array, length);
-    }
-
-    // all modifying operations result in UnsupportedOperationException
-
-    @Override
-    public void add(int index, T element) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public T set(int index, T element) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean addAll(int index, Collection<? extends T> c) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public T remove(int index) {
-        throw new UnsupportedOperationException();
     }
 
 }

@@ -1,14 +1,56 @@
+/*
+ * @(#) ImmutableSet.java
+ *
+ * immutables  High-performance immutable collections
+ * Copyright (c) 2021 Peter Wall
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package net.pwall.util;
 
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Immutable implementation of {@link Set}.
+ *
+ * @author  Peter Wall
+ * @param   <T>     the set element type
+ */
 public class ImmutableSet<T> extends ImmutableCollection<T> implements Set<T> {
 
+    /**
+     * Construct an {@code ImmutableSet} with the given array and length.
+     *
+     * @param   array       the array
+     * @param   length      the length (the number of array items to be considered part of the set)
+     */
     public ImmutableSet(T[] array, int length) {
         super(array, length);
     }
 
+    /**
+     * Construct an {@code ImmutableSet} with the given array (using the entire array).
+     *
+     * @param   array       the array
+     */
     public ImmutableSet(T[] array) {
         this(array, array.length);
     }
@@ -45,6 +87,7 @@ public class ImmutableSet<T> extends ImmutableCollection<T> implements Set<T> {
      *
      * @return  the hash code value for this set
      */
+    @Override
     public int hashCode() {
         int result = 0;
         for (int i = 0; i < length; i++)
@@ -52,15 +95,36 @@ public class ImmutableSet<T> extends ImmutableCollection<T> implements Set<T> {
         return result;
     }
 
+    /**
+     * Get an empty {@code ImmutableSet}.  This avoids a memory allocation if the set is empty.
+     *
+     * @param   <TT>        the element type
+     * @return              an empty set
+     */
     @SuppressWarnings("unchecked")
     public static <TT> ImmutableSet<TT> emptySet() {
         return new ImmutableSet<>((TT[])emptyArray);
     }
 
+    /**
+     * Get an {@code ImmutableSet} using the supplied array.  If the array length is zero, the empty set is returned.
+     *
+     * @param   array       the array
+     * @param   <TT>        the element type
+     * @return              the set
+     */
     public static <TT> ImmutableSet<TT> setOf(TT[] array) {
         return array.length == 0 ? emptySet() : new ImmutableSet<>(array, array.length);
     }
 
+    /**
+     * Get an {@code ImmutableSet} using the supplied array.  If the array length is zero, the empty set is returned.
+     *
+     * @param   array       the array
+     * @param   length      the length (the number of array items to be considered part of the set)
+     * @param   <TT>        the element type
+     * @return              the set
+     */
     public static <TT> ImmutableSet<TT> setOf(TT[] array, int length) {
         return length == 0 ? emptySet() : new ImmutableSet<>(array, length);
     }

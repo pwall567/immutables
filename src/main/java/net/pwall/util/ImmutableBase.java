@@ -25,6 +25,12 @@
 
 package net.pwall.util;
 
+/**
+ * Base class for immutable collections.  Holds the array and provides functions common to all classes.
+ *
+ * @author  Peter Wall
+ * @param   <A>     the array item type
+ */
 public abstract class ImmutableBase<A> {
 
     protected static final Object[] emptyArray = new Object[0];
@@ -32,19 +38,40 @@ public abstract class ImmutableBase<A> {
     protected final A[] array;
     protected final int length;
 
+    /**
+     * Construct an {@code ImmutableBase} with the given array and length.
+     *
+     * @param   array   the array
+     * @param   length  the length (the number of array items to be considered part of the collection)
+     */
     protected ImmutableBase(A[] array, int length) {
         this.array = array;
         this.length = length;
     }
 
+    /**
+     * Get the number of elements in the collection.
+     *
+     * @return      the number of elements
+     */
     public int size() {
         return length;
     }
 
+    /**
+     * Return {@code true} if the collection is empty.
+     *
+     * @return      {@code true} if the collection is empty
+     */
     public boolean isEmpty() {
         return length == 0;
     }
 
+    /**
+     * Modifying operation - not allowed.
+     *
+     * @throws      UnsupportedOperationException (in all cases)
+     */
     public void clear() {
         throw new UnsupportedOperationException();
     }
