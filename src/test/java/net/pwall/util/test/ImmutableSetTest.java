@@ -132,4 +132,11 @@ public class ImmutableSetTest {
         assertFalse(iterator3.hasNext());
     }
 
+    @Test
+    public void shouldRejectAttemptToCreateSetWithIncorrectLength() {
+        String[] array = new String[1];
+        assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableSet<>(array, -1));
+        assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableSet<>(array, 2));
+    }
+
 }

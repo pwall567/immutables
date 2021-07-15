@@ -46,9 +46,10 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
      *
      * @param   array       the array
      * @param   length      the length (the number of array items to be considered part of the list)
+     * @throws  IndexOutOfBoundsException if the length is less than 0 or greater than the array length
      */
     public ImmutableList(T[] array, int length) {
-        super(array, length);
+        super(array, checkLength(array, length));
     }
 
     /**

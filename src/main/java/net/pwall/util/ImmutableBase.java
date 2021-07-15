@@ -76,4 +76,19 @@ public abstract class ImmutableBase<A> {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Check the length of the array when specified explicitly.
+     *
+     * @param   array       the array
+     * @param   length      the specified length
+     * @param   <T>         the type of the array
+     * @return              the length
+     * @throws  IndexOutOfBoundsException if the length is less than 0 or greater than the array length
+     */
+    protected static <T> int checkLength(T[] array, int length) {
+        if (length < 0 || length > array.length)
+            throw new IndexOutOfBoundsException(String.valueOf(length));
+        return length;
+    }
+
 }

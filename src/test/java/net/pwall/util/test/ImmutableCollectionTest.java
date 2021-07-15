@@ -30,6 +30,7 @@ import java.util.Iterator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import net.pwall.util.ImmutableCollection;
@@ -74,6 +75,13 @@ public class ImmutableCollectionTest {
         assertTrue(iterator.hasNext());
         assertEquals("wha", iterator.next());
         assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void shouldRejectAttemptToCreateCollectionWithIncorrectLength() {
+        String[] array = new String[1];
+        assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableCollection<>(array, -1));
+        assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableCollection<>(array, 2));
     }
 
 }

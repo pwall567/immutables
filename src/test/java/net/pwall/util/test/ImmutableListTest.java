@@ -144,4 +144,11 @@ public class ImmutableListTest {
         assertTrue(list3.contains("nine"));
     }
 
+    @Test
+    public void shouldRejectAttemptToCreateListWithIncorrectLength() {
+        String[] array = new String[1];
+        assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableList<>(array, -1));
+        assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableList<>(array, 2));
+    }
+
 }

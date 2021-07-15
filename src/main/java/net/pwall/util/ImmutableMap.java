@@ -50,9 +50,10 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
      *
      * @param   array       the array of {@link MapEntry}
      * @param   length      the length (the number of array items to be considered part of the map)
+     * @throws  IndexOutOfBoundsException if the length is less than 0 or greater than the array length
      */
     public ImmutableMap(MapEntry<K, V>[] array, int length) {
-        super(array, length); // NOTE: does not check for duplicate keys
+        super(array, checkLength(array, length)); // NOTE: does not check for duplicate keys
     }
 
     /**

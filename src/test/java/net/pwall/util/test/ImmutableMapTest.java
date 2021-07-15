@@ -228,4 +228,11 @@ public class ImmutableMapTest {
         assertEquals(999, map3.get("omega"));
     }
 
+    @Test
+    public void shouldRejectAttemptToCreateMapWithIncorrectLength() {
+        ImmutableMap.MapEntry<String, Integer>[] array = ImmutableMap.createArray(1);
+        assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableMap<>(array, -1));
+        assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableMap<>(array, 2));
+    }
+
 }

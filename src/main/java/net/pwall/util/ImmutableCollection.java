@@ -42,9 +42,10 @@ public class ImmutableCollection<T> extends ImmutableCollectionBase<T, T> implem
      *
      * @param   array   the array
      * @param   length  the length (the number of array items to be considered part of the collection)
+     * @throws  IndexOutOfBoundsException if the length is less than 0 or greater than the array length
      */
     public ImmutableCollection(T[] array, int length) {
-        super(array, length);
+        super(array, checkLength(array, length));
     }
 
     /**

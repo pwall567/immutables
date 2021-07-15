@@ -41,9 +41,10 @@ public class ImmutableSet<T> extends ImmutableCollection<T> implements Set<T> {
      *
      * @param   array       the array
      * @param   length      the length (the number of array items to be considered part of the set)
+     * @throws  IndexOutOfBoundsException if the length is less than 0 or greater than the array length
      */
     public ImmutableSet(T[] array, int length) {
-        super(array, length);
+        super(array, checkLength(array, length));
     }
 
     /**
