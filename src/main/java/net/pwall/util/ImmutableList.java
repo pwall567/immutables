@@ -58,7 +58,7 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
      * @param   array       the array
      */
     public ImmutableList(T[] array) {
-        this(array, array.length);
+        super(array, array.length);
     }
 
     /**
@@ -270,7 +270,7 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
      * @return              the list
      */
     public static <TT> ImmutableList<TT> listOf(TT[] array) {
-        return array.length == 0 ? emptyList() : new ImmutableList<>(array, array.length);
+        return array.length == 0 ? emptyList() : new ImmutableList<>(array);
     }
 
     /**

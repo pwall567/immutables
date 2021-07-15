@@ -43,7 +43,7 @@ import java.util.Set;
  */
 public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V>> implements Map<K, V> {
 
-    public static MapEntry<?, ?>[] emptyEntryArray = (MapEntry<?, ?>[])Array.newInstance(MapEntry.class, 0);
+    public static MapEntry<?, ?>[] emptyEntryArray = new MapEntry[0];
 
     /**
      * Construct an {@code ImmutableMap} with the given array (of {@link MapEntry}) and length.
@@ -62,7 +62,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
      * @param   array       the array of {@link MapEntry}
      */
     public ImmutableMap(MapEntry<K, V>[] array) {
-        this(array, array.length);
+        super(array, array.length);
     }
 
     /**

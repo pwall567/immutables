@@ -53,7 +53,7 @@ public class ImmutableSet<T> extends ImmutableCollection<T> implements Set<T> {
      * @param   array       the array
      */
     public ImmutableSet(T[] array) {
-        this(array, array.length);
+        super(array, array.length);
     }
 
     /**

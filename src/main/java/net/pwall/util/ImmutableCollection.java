@@ -54,7 +54,7 @@ public class ImmutableCollection<T> extends ImmutableCollectionBase<T, T> implem
      * @param   array   the array
      */
     public ImmutableCollection(T[] array) {
-        this(array, array.length);
+        super(array, array.length);
     }
 
     /**
