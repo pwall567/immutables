@@ -5,7 +5,7 @@
 
   <groupId>net.pwall.util</groupId>
   <artifactId>immutables</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
   <name>High-performance immutable collections</name>
   <description>Immutable implementations of Java collections</description>
   <packaging>jar</packaging>

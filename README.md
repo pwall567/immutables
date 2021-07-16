@@ -1,6 +1,6 @@
 # immutables
 
-[![Build Status](https://travis-ci.com/pwall567/immutables.svg?branch=main)](https://travis-ci.org/pwall567/immutables)
+[![Build Status](https://travis-ci.com/pwall567/immutables.svg?branch=main)](https://travis-ci.com/pwall567/immutables)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Maven Central](https://img.shields.io/maven-central/v/net.pwall.util/immutables?label=Maven%20Central)](https://search.maven.org/search?q=g:%22net.pwall.util%22%20AND%20a:%22immutables%22)
 
@@ -199,25 +199,25 @@ All operations normally available through the `Map` interface are available, but
 
 ## Dependency Specification
 
-The latest version of the library is 1.0, and it may be obtained from the Maven Central repository.
+The latest version of the library is 1.1, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>net.pwall.util</groupId>
       <artifactId>immutables</artifactId>
-      <version>1.0</version>
+      <version>1.1</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    testImplementation 'net.pwall.util:immutables:1.0'
+    testImplementation 'net.pwall.util:immutables:1.1'
 ```
 ### Gradle (kts)
 ```kotlin
-    testImplementation("net.pwall.util:immutables:1.0")
+    testImplementation("net.pwall.util:immutables:1.1")
 ```
 
 Peter Wall
 
-2021-07-09
+2021-07-16
