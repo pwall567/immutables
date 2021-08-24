@@ -163,7 +163,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
         for (int i = 0; i < length; i++) {
             MapEntry<?, ?> entry = array[i];
             if (!Objects.equals(otherMap.get(entry.getKey()), entry.getValue()))
-                return true;
+                return false;
         }
         return true;
     }

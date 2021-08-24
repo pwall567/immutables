@@ -199,25 +199,25 @@ All operations normally available through the `Map` interface are available, but
 
 ## Dependency Specification
 
-The latest version of the library is 1.1, and it may be obtained from the Maven Central repository.
+The latest version of the library is 1.2, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>net.pwall.util</groupId>
       <artifactId>immutables</artifactId>
-      <version>1.1</version>
+      <version>1.2</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    testImplementation 'net.pwall.util:immutables:1.1'
+    testImplementation 'net.pwall.util:immutables:1.2'
 ```
 ### Gradle (kts)
 ```kotlin
-    testImplementation("net.pwall.util:immutables:1.1")
+    testImplementation("net.pwall.util:immutables:1.2")
 ```
 
 Peter Wall
 
-2021-07-16
+2021-08-24

@@ -2,8 +2,12 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [1.2] - 2021-08-24
+### Changed
+- `ImmutableMap`: fixed bug in `equals()`
+
 ## [1.1] - 2021-07-16
-### Added
+### Changed
 - all files: added JavaDoc
 - `ImmutableCollection`, `ImmutableList`, `ImmutableMap`, `ImmutableSet`: added length checks
 - several: minor optimisations
