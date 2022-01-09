@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `ImmutableMap`: switched to use `ImmutableMapEntry` (potential breaking change)
 ### Added
 - `ImmutableMapEntry`: extracted from `ImmutableMap`
+- `MiniSet`, `MiniMap`: and implementing classes
 
 ## [1.2] - 2021-08-24
 ### Changed
