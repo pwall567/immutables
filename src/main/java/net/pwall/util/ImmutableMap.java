@@ -2,7 +2,7 @@
  * @(#) ImmutableMap.java
  *
  * immutables  High-performance immutable collections
- * Copyright (c) 2021 Peter Wall
+ * Copyright (c) 2021, 2022 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -98,7 +98,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
     }
 
     /**
-     * Get to value corresponding to the supplied key.  If the key is not found, {@code null} is returned.
+     * Get the value corresponding to the supplied key.  If the key is not found, {@code null} is returned.
      *
      * @param   key         the key
      * @return              the value
@@ -189,7 +189,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
      * each of the entries (as key=value), enclosed in braces and separated by a comma and a space.  Keys and values are
      * converted to strings by {@link String#valueOf(Object)}.
      *
-     * @return          a string representation of this collection
+     * @return          a string representation of this map
      */
     @Override
     public String toString() {
@@ -218,7 +218,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
      * @return          the string representation
      */
     private String stringOf(Object obj) {
-        return obj == null ? "null" : obj == this ? "(this Map)" : obj.toString();
+        return obj == this ? "(this Map)" : String.valueOf(obj);
     }
 
     /**
