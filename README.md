@@ -137,15 +137,15 @@ All operations normally available through the `Set` interface are available, but
 
 ### `ImmutableMap`
 
-`ImmutableMap` operates on an array of `ImmutableMap.MapEntry`, which may be created by the static function
+`ImmutableMap` operates on an array of `ImmutableMapEntry`, which may be created by the static function
 `createArray()`:
 ```java
-        ImmutableMap.MapEntry<String, LineItem>[] array = ImmutableMap.createArray(length);
+        ImmutableMapEntry<String, LineItem>[] array = ImmutableMap.createArray(length);
 ```
 
 Then, the array entries are constructed and added to the array:
 ```java
-        array[0] = new ImmutableMap.MapEntry<>(key, value);
+        array[0] = new ImmutableMapEntry<>(key, value);
 ```
 Or, more simply, using a static function:
 ```java
@@ -155,7 +155,7 @@ Or, more simply, using a static function:
 Alternatively, if the length of the array is not known in advance (and a reasonable default can not be assumed), the
 array entries may be built in a `List`:
 ```java
-        List<ImmutableMap.MapEntry<String, LineItem>> list = new ArrayList<>();
+        List<ImmutableMapEntry<String, LineItem>> list = new ArrayList<>();
 ```
 and:
 ```java
@@ -191,33 +191,39 @@ function to check for duplicates:
             throw new RuntimeException("Duplicate key");
 ```
 
-The array is not copied (except in the case of `ImmutableMap.from(list)`, so the remarks in the description of
+The array is not copied (except in the case of `ImmutableMap.from(list)`), so the remarks in the description of
 [`ImmutableList`](#immutablelist) apply here also.
 
 All operations normally available through the `Map` interface are available, but all modifying operations will cause an
 `UnsupportedOperationException`.
 
+### `ImmutableMapEntry`
+
+`ImmutableMapEntry` is a simple implementation of `Map.Entry` which blocks the `setValue()` method.
+It is primarily intended to be used by `ImmutableMap`, but it may be used whenever an immutable map entry object is
+required.
+
 ## Dependency Specification
 
-The latest version of the library is 1.2, and it may be obtained from the Maven Central repository.
+The latest version of the library is 2.0, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>net.pwall.util</groupId>
       <artifactId>immutables</artifactId>
-      <version>1.2</version>
+      <version>2.0</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    testImplementation 'net.pwall.util:immutables:1.2'
+    implementation 'net.pwall.util:immutables:2.0'
 ```
 ### Gradle (kts)
 ```kotlin
-    testImplementation("net.pwall.util:immutables:1.2")
+    implementation("net.pwall.util:immutables:2.0")
 ```
 
 Peter Wall
 
-2021-08-24
+2022-01-09

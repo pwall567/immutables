@@ -2,6 +2,12 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [2.0] - 2022-01-09
+### Changed
+- `ImmutableMap`: switched to use `ImmutableMapEntry` (potential breaking change)
+### Added
+- `ImmutableMapEntry`: extracted from `ImmutableMap`
+
 ## [1.2] - 2021-08-24
 ### Changed
 - `ImmutableMap`: fixed bug in `equals()`

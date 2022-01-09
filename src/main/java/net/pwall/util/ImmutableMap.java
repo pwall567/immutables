@@ -41,27 +41,27 @@ import java.util.Set;
  * @param   <K>     the key type
  * @param   <V>     the value type
  */
-public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V>> implements Map<K, V> {
+public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> implements Map<K, V> {
 
-    public static MapEntry<?, ?>[] emptyEntryArray = new MapEntry[0];
+    public static ImmutableMapEntry<?, ?>[] emptyEntryArray = new ImmutableMapEntry[0];
 
     /**
-     * Construct an {@code ImmutableMap} with the given array (of {@link MapEntry}) and length.
+     * Construct an {@code ImmutableMap} with the given array (of {@link ImmutableMapEntry}) and length.
      *
-     * @param   array       the array of {@link MapEntry}
+     * @param   array       the array of {@link ImmutableMapEntry}
      * @param   length      the length (the number of array items to be considered part of the map)
      * @throws  IndexOutOfBoundsException if the length is less than 0 or greater than the array length
      */
-    public ImmutableMap(MapEntry<K, V>[] array, int length) {
+    public ImmutableMap(ImmutableMapEntry<K, V>[] array, int length) {
         super(array, checkLength(array, length)); // NOTE: does not check for duplicate keys
     }
 
     /**
      * Construct an {@code ImmutableList} with the given array (using the entire array).
      *
-     * @param   array       the array of {@link MapEntry}
+     * @param   array       the array of {@link ImmutableMapEntry}
      */
-    public ImmutableMap(MapEntry<K, V>[] array) {
+    public ImmutableMap(ImmutableMapEntry<K, V>[] array) {
         super(array, array.length);
     }
 
@@ -145,8 +145,8 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
     /**
      * Compares the specified object with this map for equality.  Returns {@code true} if the given object is also a
      * map, the maps contains the same number of entries and for each key in one map, the values returned by both maps
-     * are equal (either both are {@code null}, or they compare as equal using {@link Object#equals}.  This ensures that
-     * the {@code equals} method works properly across different implementations of the {@code Map} interface.
+     * are equal (either both are {@code null}, or they compare as equal using {@link Object#equals}).  This ensures
+     * that the {@code equals} method works properly across different implementations of the {@code Map} interface.
      *
      * @param   other           object to be compared for equality with this map
      * @return                  {@code true} if the specified object is equal to this map
@@ -161,7 +161,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
         if (length != otherMap.size())
             return false;
         for (int i = 0; i < length; i++) {
-            MapEntry<?, ?> entry = array[i];
+            ImmutableMapEntry<?, ?> entry = array[i];
             if (!Objects.equals(otherMap.get(entry.getKey()), entry.getValue()))
                 return false;
         }
@@ -199,18 +199,26 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
         sb.append('{');
         int i = 0;
         while (true) {
-            MapEntry<K, V> entry = array[i];
-            K key = entry.getKey();
-            V value = entry.getValue();
-            sb.append(key == this ? "(this Map)" : key);
+            ImmutableMapEntry<K, V> entry = array[i];
+            sb.append(stringOf(entry.getKey()));
             sb.append('=');
-            sb.append(value == this ? "(this Map)" : value);
+            sb.append(stringOf(entry.getValue()));
             if (++i >= length)
                 break;
             sb.append(',').append(' ');
         }
         sb.append('}');
         return sb.toString();
+    }
+
+    /**
+     * Return a string representation of the supplied key or value, guarding against possible recursion.
+     *
+     * @param   obj     the object
+     * @return          the string representation
+     */
+    private String stringOf(Object obj) {
+        return obj == null ? "null" : obj == this ? "(this Map)" : obj.toString();
     }
 
     /**
@@ -244,16 +252,16 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
     }
 
     /**
-     * Create an {@code ImmutableMap} from the supplied {@link List} of {@link MapEntry}.
+     * Create an {@code ImmutableMap} from the supplied {@link List} of {@link ImmutableMapEntry}.
      *
-     * @param   list        the {@link List} of {@link MapEntry}
+     * @param   list        the {@link List} of {@link ImmutableMapEntry}
      * @param   <KK>        the key type
      * @param   <VV>        the value type
      * @return              the new {@code ImmutableMap}
      */
     @SuppressWarnings("unchecked")
-    public static <KK, VV> ImmutableMap<KK, VV> from(List<MapEntry<KK, VV>> list) {
-        return list.isEmpty() ? emptyMap() : new ImmutableMap<>(list.toArray(new MapEntry[0]));
+    public static <KK, VV> ImmutableMap<KK, VV> from(List<ImmutableMapEntry<KK, VV>> list) {
+        return list.isEmpty() ? emptyMap() : new ImmutableMap<>(list.toArray(new ImmutableMapEntry[0]));
     }
 
     /**
@@ -265,49 +273,49 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
      */
     @SuppressWarnings("unchecked")
     public static <KK, VV> ImmutableMap<KK, VV> emptyMap() {
-        return new ImmutableMap<>((MapEntry<KK, VV>[])emptyEntryArray);
+        return new ImmutableMap<>((ImmutableMapEntry<KK, VV>[])emptyEntryArray);
     }
 
     /**
-     * Create an {@code ImmutableMap} from the supplied array of {@link MapEntry}.
+     * Create an {@code ImmutableMap} from the supplied array of {@link ImmutableMapEntry}.
      *
-     * @param   array       the array of {@link MapEntry}
+     * @param   array       the array of {@link ImmutableMapEntry}
      * @param   <KK>        the key type
      * @param   <VV>        the value type
      * @return              the new {@code ImmutableMap}
      */
-    public static <KK, VV> ImmutableMap<KK, VV> mapOf(MapEntry<KK, VV>[] array) {
+    public static <KK, VV> ImmutableMap<KK, VV> mapOf(ImmutableMapEntry<KK, VV>[] array) {
         return array.length == 0 ? emptyMap() : new ImmutableMap<>(array, array.length);
     }
 
     /**
-     * Create an {@code ImmutableMap} from the supplied array of {@link MapEntry} with the specified length.
+     * Create an {@code ImmutableMap} from the supplied array of {@link ImmutableMapEntry} with the specified length.
      *
-     * @param   array       the array of {@link MapEntry}
+     * @param   array       the array of {@link ImmutableMapEntry}
      * @param   length      the length (the number of array items to be considered part of the map)
      * @param   <KK>        the key type
      * @param   <VV>        the value type
      * @return              the new {@code ImmutableMap}
      */
-    public static <KK, VV> ImmutableMap<KK, VV> mapOf(MapEntry<KK, VV>[] array, int length) {
+    public static <KK, VV> ImmutableMap<KK, VV> mapOf(ImmutableMapEntry<KK, VV>[] array, int length) {
         return length == 0 ? emptyMap() : new ImmutableMap<>(array, length);
     }
 
     /**
-     * Create a {@link MapEntry}.
+     * Create a {@link ImmutableMapEntry}.
      *
      * @param   key         the key
      * @param   value       the value
      * @param   <KK>        the key type
      * @param   <VV>        the value type
-     * @return              the new {@link MapEntry}
+     * @return              the new {@link ImmutableMapEntry}
      */
-    public static <KK, VV> MapEntry<KK, VV> entry(KK key, VV value) {
-        return new MapEntry<>(key, value);
+    public static <KK, VV> ImmutableMapEntry<KK, VV> entry(KK key, VV value) {
+        return new ImmutableMapEntry<>(key, value);
     }
 
     /**
-     * Create an array of {@link MapEntry}, of the specified length.
+     * Create an array of {@link ImmutableMapEntry}, of the specified length.
      *
      * @param   length      the length
      * @param   <KK>        the key type
@@ -315,13 +323,14 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
      * @return              the new array
      */
     @SuppressWarnings("unchecked")
-    public static <KK, VV> MapEntry<KK, VV>[] createArray(int length) {
-        return new MapEntry[length];
+    public static <KK, VV> ImmutableMapEntry<KK, VV>[] createArray(int length) {
+        return new ImmutableMapEntry[length];
     }
 
     /**
-     * Test whether an array of {@link MapEntry} contains the specified key.  The {@code ImmutableMap} constructor does
-     * not check for duplicate keys, so this function provides a means of checking prior to construction.
+     * Test whether an array of {@link ImmutableMapEntry} contains the specified key.  The {@code ImmutableMap}
+     * constructor does not check for duplicate keys, so this function provides a means of checking prior to
+     * construction.
      *
      * @param   array       the array
      * @param   length      the length so far (the number of elements to be checked against)
@@ -330,13 +339,14 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
      * @param   <VV>        the value type
      * @return              {@code true} if the key exists in the array
      */
-    public static <KK, VV> boolean containsKey(MapEntry<KK, VV>[] array, int length, KK key) {
+    public static <KK, VV> boolean containsKey(ImmutableMapEntry<KK, VV>[] array, int length, KK key) {
         return findKey(array, length, key) >= 0;
     }
 
     /**
-     * Test whether a {@link List} of {@link MapEntry} contains the specified key.  The {@code ImmutableMap} constructor
-     * does not check for duplicate keys, so this function provides a means of checking prior to construction.
+     * Test whether a {@link List} of {@link ImmutableMapEntry} contains the specified key.  The {@code ImmutableMap}
+     * constructor does not check for duplicate keys, so this function provides a means of checking prior to
+     * construction.
      *
      * @param   list        the {@link List}
      * @param   key         the new key
@@ -344,16 +354,16 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
      * @param   <VV>        the value type
      * @return              {@code true} if the key exists in the {@link List}
      */
-    public static <KK, VV> boolean containsKey(List<MapEntry<KK, VV>> list, KK key) {
-        for (MapEntry<KK, VV> entry : list)
+    public static <KK, VV> boolean containsKey(List<ImmutableMapEntry<KK, VV>> list, KK key) {
+        for (ImmutableMapEntry<KK, VV> entry : list)
             if (Objects.equals(entry.getKey(), key))
                 return true;
         return false;
     }
 
     /**
-     * Locate a key in an array of {@link MapEntry}.  This is used both to check for duplicates prior to construction,
-     * and to find a value corresponding to a key in a map.
+     * Locate a key in an array of {@link ImmutableMapEntry}.  This is used both to check for duplicates prior to
+     * construction, and to find a value corresponding to a key in a map.
      *
      * @param   array       the array
      * @param   length      the length so far (the number of elements to be checked against)
@@ -362,7 +372,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
      * @param   <VV>        the value type
      * @return              the index of the key in the array, or -1 if it is not found
      */
-    public static <KK, VV> int findKey(MapEntry<KK, VV>[] array, int length, Object key) {
+    public static <KK, VV> int findKey(ImmutableMapEntry<KK, VV>[] array, int length, Object key) {
         if (key == null) {
             for (int i = 0; i < length; i++)
                 if (array[i].getKey() == null)
@@ -377,112 +387,21 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
     }
 
     /**
-     * A map entry (key, value) for an {@code ImmutableMap}.
-     *
-     * @param   <K>         the key type
-     * @param   <V>         the value type
-     */
-    public static class MapEntry<K, V> implements Map.Entry<K, V> {
-
-        private final K key;
-        private final V value;
-
-        /**
-         * Construct a {@code MapEntry} with the given key and value.
-         *
-         * @param   key         the key
-         * @param   value       the value
-         */
-        public MapEntry(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        /**
-         * Get the key.
-         *
-         * @return      the key
-         */
-        @Override
-        public K getKey() {
-            return key;
-        }
-
-        /**
-         * Get the value.
-         *
-         * @return      the value
-         */
-        @Override
-        public V getValue() {
-            return value;
-        }
-
-        /**
-         * Modifying operation - not allowed.
-         *
-         * @throws      UnsupportedOperationException (in all cases)
-         */
-        @Override
-        public V setValue(V value) {
-            throw new UnsupportedOperationException();
-        }
-
-        /**
-         * Compare with another object for equality.  Any other {@link Map.Entry} with the same key and value is
-         * considered equal (where the key and value equality tests are done by {@link Objects#equals}.
-         *
-         * @param   other       the other object
-         * @return              {@code true} if the objects are equal
-         */
-        @Override
-        public boolean equals(Object other) {
-            if (this == other)
-                return true;
-            if (!(other instanceof Map.Entry))
-                return false;
-            Entry<?, ?> otherMapEntry = (Entry<?, ?>)other;
-            return Objects.equals(key, otherMapEntry.getKey()) && Objects.equals(value, otherMapEntry.getValue());
-        }
-
-        /**
-         * This is coded to match exactly the hash calculation used by {@link java.util.HashMap}.
-         *
-         * @return  the hash code
-         */
-        @Override
-        public int hashCode() {
-            return Objects.hashCode(key) ^ Objects.hashCode(value);
-        }
-
-        /**
-         * Create a string representation of this {@code MapEntry}, in the form "key=value".
-         *
-         * @return      the string representation
-         */
-        @Override
-        public String toString() {
-            return String.valueOf(key) + '=' + value;
-        }
-
-    }
-
-    /**
      * Implementation of the {@link Set} interface to provide a view of the keys in the {@code ImmutableMap}.  It makes
-     * use of the same underlying array, but returns only the key portion of the {@link MapEntry}.
+     * use of the same underlying array, but returns only the key portion of the {@link ImmutableMapEntry}.
      *
      * @param   <K>         the key type
      * @param   <V>         the value type
      */
-    public static class KeySet<K, V> extends ImmutableCollectionBase<MapEntry<K, V>, K> implements Set<K> {
+    public static class KeySet<K, V> extends ImmutableCollectionBase<ImmutableMapEntry<K, V>, K> implements Set<K> {
 
         /**
-         * Construct a {@code KeySet} with the given array of {@link MapEntry} and the specified length.
+         * Construct a {@code KeySet} with the given array of {@link ImmutableMapEntry} and the specified length.
          *
-         * @param   array       the array of {@link MapEntry}
+         * @param   array       the array of {@link ImmutableMapEntry}
          * @param   length      the length (the number of array items to be considered part of the map)
          */
-        KeySet(MapEntry<K, V>[] array, int length) {
+        KeySet(ImmutableMapEntry<K, V>[] array, int length) {
             super(array, length);
         }
 
@@ -612,15 +531,16 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
      * @param   <K>         the key type
      * @param   <V>         the value type
      */
-    public static class KeyIterator<K, V> extends ImmutableIteratorBase<MapEntry<K, V>> implements Iterator<K> {
+    public static class KeyIterator<K, V> extends ImmutableIteratorBase<ImmutableMapEntry<K, V>>
+            implements Iterator<K> {
 
         /**
-         * Construct a {@code KeyIterator} with the given array (of {@link MapEntry}) and length.
+         * Construct a {@code KeyIterator} with the given array (of {@link ImmutableMapEntry}) and length.
          *
-         * @param   array       the array of {@link MapEntry}
+         * @param   array       the array of {@link ImmutableMapEntry}
          * @param   length      the length (the number of array items to be considered part of the map)
          */
-        KeyIterator(MapEntry<K, V>[] array, int length) {
+        KeyIterator(ImmutableMapEntry<K, V>[] array, int length) {
             super(array, length, 0);
         }
 
@@ -639,21 +559,22 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
 
     /**
      * Implementation of the {@link Collection} interface to provide a view of the values in the {@code ImmutableMap}.
-     * It makes use of the same underlying array, but returns only the value portion of the {@link MapEntry}.
+     * It makes use of the same underlying array, but returns only the value portion of the {@link ImmutableMapEntry}.
      *
      * @param   <K>         the key type
      * @param   <V>         the value type
      */
-    public static class ValueCollection<K, V> extends ImmutableCollectionBase<MapEntry<K, V>, V>
+    public static class ValueCollection<K, V> extends ImmutableCollectionBase<ImmutableMapEntry<K, V>, V>
             implements Collection<V> {
 
         /**
-         * Construct a {@code ValueCollection} with the given array of {@link MapEntry} and the specified length.
+         * Construct a {@code ValueCollection} with the given array of {@link ImmutableMapEntry} and the specified
+         * length.
          *
-         * @param   array       the array of {@link MapEntry}
+         * @param   array       the array of {@link ImmutableMapEntry}
          * @param   length      the length (the number of array items to be considered part of the map)
          */
-        ValueCollection(MapEntry<K, V>[] array, int length) {
+        ValueCollection(ImmutableMapEntry<K, V>[] array, int length) {
             super(array, length);
         }
 
@@ -744,15 +665,16 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMap.MapEntry<K, V
      * @param   <K>         the key type
      * @param   <V>         the value type
      */
-    public static class ValueIterator<K, V> extends ImmutableIteratorBase<MapEntry<K, V>> implements Iterator<V> {
+    public static class ValueIterator<K, V> extends ImmutableIteratorBase<ImmutableMapEntry<K, V>>
+            implements Iterator<V> {
 
         /**
-         * Construct a {@code ValueIterator} with the given array (of {@link MapEntry}) and length.
+         * Construct a {@code ValueIterator} with the given array (of {@link ImmutableMapEntry}) and length.
          *
-         * @param   array       the array of {@link MapEntry}
+         * @param   array       the array of {@link ImmutableMapEntry}
          * @param   length      the length (the number of array items to be considered part of the map)
          */
-        ValueIterator(MapEntry<K, V>[] array, int length) {
+        ValueIterator(ImmutableMapEntry<K, V>[] array, int length) {
             super(array, length, 0);
         }
 

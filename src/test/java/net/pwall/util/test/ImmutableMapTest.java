@@ -42,15 +42,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import net.pwall.util.ImmutableMap;
+import net.pwall.util.ImmutableMapEntry;
 
 public class ImmutableMapTest {
 
     @Test
     public void shouldCreateImmutableMap() {
-        List<ImmutableMap.MapEntry<String, Integer>> list = new ArrayList<>();
-        list.add(new ImmutableMap.MapEntry<>("alpha", 123));
-        list.add(new ImmutableMap.MapEntry<>("beta", 456));
-        list.add(new ImmutableMap.MapEntry<>("gamma", 789));
+        List<ImmutableMapEntry<String, Integer>> list = new ArrayList<>();
+        list.add(new ImmutableMapEntry<>("alpha", 123));
+        list.add(new ImmutableMapEntry<>("beta", 456));
+        list.add(new ImmutableMapEntry<>("gamma", 789));
         assertTrue(ImmutableMap.containsKey(list, "alpha"));
         assertFalse(ImmutableMap.containsKey(list, "delta"));
         ImmutableMap<String, Integer> map = ImmutableMap.from(list);
@@ -63,7 +64,7 @@ public class ImmutableMapTest {
 
     @Test
     public void shouldCreateImmutableMapFromArray() {
-        ImmutableMap.MapEntry<String, Integer>[] array = ImmutableMap.createArray(4);
+        ImmutableMapEntry<String, Integer>[] array = ImmutableMap.createArray(4);
         array[0] = ImmutableMap.entry("alpha", 123);
         array[1] = ImmutableMap.entry("beta", 456);
         array[2] = ImmutableMap.entry("gamma", 789);
@@ -78,7 +79,7 @@ public class ImmutableMapTest {
 
     @Test
     public void shouldWorkWithNullValues() {
-        List<ImmutableMap.MapEntry<String, Integer>> list = new ArrayList<>();
+        List<ImmutableMapEntry<String, Integer>> list = new ArrayList<>();
         list.add(ImmutableMap.entry("alpha", 123));
         list.add(ImmutableMap.entry("beta", 456));
         list.add(ImmutableMap.entry(null, 888));
@@ -95,10 +96,10 @@ public class ImmutableMapTest {
 
     @Test
     public void shouldCompareWithADifferentMap() {
-        List<ImmutableMap.MapEntry<String, Integer>> list = new ArrayList<>();
-        list.add(new ImmutableMap.MapEntry<>("alpha", 123));
-        list.add(new ImmutableMap.MapEntry<>("beta", 456));
-        list.add(new ImmutableMap.MapEntry<>("gamma", 789));
+        List<ImmutableMapEntry<String, Integer>> list = new ArrayList<>();
+        list.add(new ImmutableMapEntry<>("alpha", 123));
+        list.add(new ImmutableMapEntry<>("beta", 456));
+        list.add(new ImmutableMapEntry<>("gamma", 789));
         ImmutableMap<String, Integer> map = ImmutableMap.from(list);
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("alpha", 123);
@@ -117,10 +118,10 @@ public class ImmutableMapTest {
 
     @Test
     public void shouldCreateKeySet() {
-        List<ImmutableMap.MapEntry<String, Integer>> list = new ArrayList<>();
-        list.add(new ImmutableMap.MapEntry<>("alpha", 123));
-        list.add(new ImmutableMap.MapEntry<>("beta", 456));
-        list.add(new ImmutableMap.MapEntry<>("gamma", 789));
+        List<ImmutableMapEntry<String, Integer>> list = new ArrayList<>();
+        list.add(new ImmutableMapEntry<>("alpha", 123));
+        list.add(new ImmutableMapEntry<>("beta", 456));
+        list.add(new ImmutableMapEntry<>("gamma", 789));
         ImmutableMap<String, Integer> map = ImmutableMap.from(list);
         Set<String> keySet = map.keySet();
         assertEquals(3, keySet.size());
@@ -139,10 +140,10 @@ public class ImmutableMapTest {
 
     @Test
     public void shouldCreateValueCollection() {
-        List<ImmutableMap.MapEntry<String, Integer>> list = new ArrayList<>();
-        list.add(new ImmutableMap.MapEntry<>("alpha", 123));
-        list.add(new ImmutableMap.MapEntry<>("beta", 456));
-        list.add(new ImmutableMap.MapEntry<>("gamma", 789));
+        List<ImmutableMapEntry<String, Integer>> list = new ArrayList<>();
+        list.add(new ImmutableMapEntry<>("alpha", 123));
+        list.add(new ImmutableMapEntry<>("beta", 456));
+        list.add(new ImmutableMapEntry<>("gamma", 789));
         ImmutableMap<String, Integer> map = ImmutableMap.from(list);
         Collection<Integer> values = map.values();
         assertEquals(3, values.size());
@@ -161,10 +162,10 @@ public class ImmutableMapTest {
 
     @Test
     public void shouldRejectMutatingOperations() {
-        List<ImmutableMap.MapEntry<String, Integer>> list = new ArrayList<>();
-        list.add(new ImmutableMap.MapEntry<>("alpha", 123));
-        list.add(new ImmutableMap.MapEntry<>("beta", 456));
-        list.add(new ImmutableMap.MapEntry<>("gamma", 789));
+        List<ImmutableMapEntry<String, Integer>> list = new ArrayList<>();
+        list.add(new ImmutableMapEntry<>("alpha", 123));
+        list.add(new ImmutableMapEntry<>("beta", 456));
+        list.add(new ImmutableMapEntry<>("gamma", 789));
         ImmutableMap<String, Integer> map = ImmutableMap.from(list);
         assertThrows(UnsupportedOperationException.class, () -> map.put("delta", 888));
     }
@@ -189,7 +190,7 @@ public class ImmutableMapTest {
 
     @Test
     public void shouldConditionallyCreateEmptyMap() {
-        ImmutableMap.MapEntry<String, Integer>[] array = ImmutableMap.createArray(1);
+        ImmutableMapEntry<String, Integer>[] array = ImmutableMap.createArray(1);
         array[0] = ImmutableMap.entry("omega", 999);
         ImmutableMap<String, Integer> map1 = ImmutableMap.mapOf(array, 0);
         assertTrue(map1.isEmpty());
@@ -234,7 +235,7 @@ public class ImmutableMapTest {
 
     @Test
     public void shouldRejectAttemptToCreateMapWithIncorrectLength() {
-        ImmutableMap.MapEntry<String, Integer>[] array = ImmutableMap.createArray(1);
+        ImmutableMapEntry<String, Integer>[] array = ImmutableMap.createArray(1);
         assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableMap<>(array, -1));
         assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableMap<>(array, 2));
     }
