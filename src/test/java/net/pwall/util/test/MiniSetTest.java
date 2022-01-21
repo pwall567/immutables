@@ -25,6 +25,8 @@
 
 package net.pwall.util.test;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -47,6 +49,10 @@ public class MiniSetTest {
         Iterator<String> iter = miniSet.iterator();
         assertFalse(iter.hasNext());
         assertThrows(UnsupportedOperationException.class, () -> miniSet.add("one"));
+        HashSet<String> hashSet = new HashSet<>();
+        assertEquals(miniSet, hashSet);
+        assertEquals(miniSet.hashCode(), hashSet.hashCode());
+        assertEquals("[]", miniSet.toString());
     }
 
     @Test
@@ -61,6 +67,11 @@ public class MiniSetTest {
         assertEquals("one", iter.next());
         assertFalse(iter.hasNext());
         assertThrows(UnsupportedOperationException.class, () -> miniSet.add("two"));
+        HashSet<String> hashSet = new HashSet<>();
+        hashSet.add("one");
+        assertEquals(miniSet, hashSet);
+        assertEquals(miniSet.hashCode(), hashSet.hashCode());
+        assertEquals("[one]", miniSet.toString());
     }
 
     @Test
@@ -78,6 +89,34 @@ public class MiniSetTest {
         assertEquals("two", iter.next());
         assertFalse(iter.hasNext());
         assertThrows(UnsupportedOperationException.class, () -> miniSet.add("three"));
+        HashSet<String> hashSet = new HashSet<>(Arrays.asList("one", "two"));
+        assertEquals(miniSet, hashSet);
+        assertEquals(miniSet.hashCode(), hashSet.hashCode());
+        assertEquals("[one, two]", miniSet.toString());
+    }
+
+    @Test
+    public void shouldCreateMiniSetOfSize3() {
+        Set<String> miniSet = MiniSet.of("one", "two", "three");
+        assertEquals(3, miniSet.size());
+        assertTrue(miniSet.contains("one"));
+        assertTrue(miniSet.contains("two"));
+        assertTrue(miniSet.contains("three"));
+        assertFalse(miniSet.contains("anything"));
+        assertEquals("[one, two, three]", miniSet.toString());
+        Iterator<String> iter = miniSet.iterator();
+        assertTrue(iter.hasNext());
+        assertEquals("one", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("two", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("three", iter.next());
+        assertFalse(iter.hasNext());
+        assertThrows(UnsupportedOperationException.class, () -> miniSet.add("four"));
+        HashSet<String> hashSet = new HashSet<>(Arrays.asList("one", "two", "three"));
+        assertEquals(miniSet, hashSet);
+        assertEquals(miniSet.hashCode(), hashSet.hashCode());
+        assertEquals("[one, two, three]", miniSet.toString());
     }
 
 }

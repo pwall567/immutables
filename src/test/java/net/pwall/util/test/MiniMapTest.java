@@ -25,6 +25,7 @@
 
 package net.pwall.util.test;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -53,6 +54,10 @@ public class MiniMapTest {
         assertFalse(values.hasNext());
         Iterator<Map.Entry<String, Integer>> entries = miniMap.entrySet().iterator();
         assertFalse(entries.hasNext());
+        HashMap<String, Integer> hashMap = new HashMap<>();
+        assertEquals(miniMap, hashMap);
+        assertEquals(miniMap.hashCode(), hashMap.hashCode());
+        assertEquals("{}", miniMap.toString());
     }
 
     @Test
@@ -79,6 +84,109 @@ public class MiniMapTest {
         assertEquals("abc", entry.getKey());
         assertEquals(123, entry.getValue());
         assertFalse(entries.hasNext());
+        HashMap<String, Integer> hashMap = new HashMap<>();
+        hashMap.put("abc", 123);
+        assertEquals(miniMap, hashMap);
+        assertEquals(miniMap.hashCode(), hashMap.hashCode());
+        assertEquals("{abc=123}", miniMap.toString());
+    }
+
+    @Test
+    public void shouldCreateMiniMapOfSize2() {
+        Map<String, Integer> miniMap = MiniMap.map("abc", 123, "def", 888);
+        assertEquals(2, miniMap.size());
+        assertTrue(miniMap.containsKey("abc"));
+        assertTrue(miniMap.containsKey("def"));
+        assertFalse(miniMap.containsKey("xyz"));
+        assertTrue(miniMap.containsValue(123));
+        assertTrue(miniMap.containsValue(888));
+        assertFalse(miniMap.containsValue(456));
+        assertEquals(123, miniMap.get("abc"));
+        assertEquals(888, miniMap.get("def"));
+        assertThrows(UnsupportedOperationException.class, () -> miniMap.put("xyz", 456));
+        Iterator<String> keys = miniMap.keySet().iterator();
+        assertTrue(keys.hasNext());
+        assertEquals("abc", keys.next());
+        assertTrue(keys.hasNext());
+        assertEquals("def", keys.next());
+        assertFalse(keys.hasNext());
+        Iterator<Integer> values = miniMap.values().iterator();
+        assertTrue(values.hasNext());
+        assertEquals(123, values.next());
+        assertTrue(values.hasNext());
+        assertEquals(888, values.next());
+        assertFalse(values.hasNext());
+        Iterator<Map.Entry<String, Integer>> entries = miniMap.entrySet().iterator();
+        assertTrue(entries.hasNext());
+        Map.Entry<String, Integer> entry = entries.next();
+        assertEquals("abc", entry.getKey());
+        assertEquals(123, entry.getValue());
+        assertTrue(entries.hasNext());
+        entry = entries.next();
+        assertEquals("def", entry.getKey());
+        assertEquals(888, entry.getValue());
+        assertFalse(entries.hasNext());
+        HashMap<String, Integer> hashMap = new HashMap<>();
+        hashMap.put("abc", 123);
+        hashMap.put("def", 888);
+        assertEquals(miniMap, hashMap);
+        assertEquals(miniMap.hashCode(), hashMap.hashCode());
+        assertEquals("{abc=123, def=888}", miniMap.toString());
+    }
+
+    @Test
+    public void shouldCreateMiniMapOfSize3() {
+        Map<String, Integer> miniMap = MiniMap.map("abc", 123, "def", 888, "ghi", 27);
+        assertEquals(3, miniMap.size());
+        assertTrue(miniMap.containsKey("abc"));
+        assertTrue(miniMap.containsKey("def"));
+        assertTrue(miniMap.containsKey("ghi"));
+        assertFalse(miniMap.containsKey("xyz"));
+        assertTrue(miniMap.containsValue(123));
+        assertTrue(miniMap.containsValue(888));
+        assertTrue(miniMap.containsValue(27));
+        assertFalse(miniMap.containsValue(456));
+        assertEquals(123, miniMap.get("abc"));
+        assertEquals(27, miniMap.get("ghi"));
+        assertEquals(888, miniMap.get("def"));
+        assertThrows(UnsupportedOperationException.class, () -> miniMap.put("xyz", 456));
+        Iterator<String> keys = miniMap.keySet().iterator();
+        assertTrue(keys.hasNext());
+        assertEquals("abc", keys.next());
+        assertTrue(keys.hasNext());
+        assertEquals("def", keys.next());
+        assertTrue(keys.hasNext());
+        assertEquals("ghi", keys.next());
+        assertFalse(keys.hasNext());
+        Iterator<Integer> values = miniMap.values().iterator();
+        assertTrue(values.hasNext());
+        assertEquals(123, values.next());
+        assertTrue(values.hasNext());
+        assertEquals(888, values.next());
+        assertTrue(values.hasNext());
+        assertEquals(27, values.next());
+        assertFalse(values.hasNext());
+        Iterator<Map.Entry<String, Integer>> entries = miniMap.entrySet().iterator();
+        assertTrue(entries.hasNext());
+        Map.Entry<String, Integer> entry = entries.next();
+        assertEquals("abc", entry.getKey());
+        assertEquals(123, entry.getValue());
+        assertTrue(entries.hasNext());
+        entry = entries.next();
+        assertEquals("def", entry.getKey());
+        assertEquals(888, entry.getValue());
+        assertTrue(entries.hasNext());
+        entry = entries.next();
+        assertEquals("ghi", entry.getKey());
+        assertEquals(27, entry.getValue());
+        assertFalse(entries.hasNext());
+        HashMap<String, Integer> hashMap = new HashMap<>();
+        hashMap.put("abc", 123);
+        hashMap.put("def", 888);
+        hashMap.put("ghi", 27);
+        assertEquals(miniMap, hashMap);
+        assertEquals(miniMap.hashCode(), hashMap.hashCode());
+        assertEquals("{abc=123, def=888, ghi=27}", miniMap.toString());
     }
 
 }

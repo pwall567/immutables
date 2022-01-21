@@ -1,5 +1,5 @@
 /*
- * @(#) MiniSet2.java
+ * @(#) MiniSet3.java
  *
  * immutables  High-performance immutable collections
  * Copyright (c) 2022 Peter Wall
@@ -30,35 +30,38 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
- * An implementation of {@link MiniSet} containing two values.
+ * An implementation of {@link MiniSet} containing three values.
  *
  * @author  Peter Wall
  * @param   <T>     the value type
  */
-public class MiniSet2<T> extends MiniSet<T> {
+public class MiniSet3<T> extends MiniSet<T> {
 
     private final T value0;
     private final T value1;
+    private final T value2;
 
     /**
-     * Construct a {@code MiniSet2} with the given values.
+     * Construct a {@code MiniSet3} with the given values.
      *
      * @param   value0      the first value
      * @param   value1      the second value
+     * @param   value2      the third value
      */
-    public MiniSet2(T value0, T value1) {
+    public MiniSet3(T value0, T value1, T value2) {
         this.value0 = value0;
         this.value1 = value1;
+        this.value2 = value2;
     }
 
     /**
-     * Get the number of values (always two).
+     * Get the number of values (always three).
      *
      * @return      the number of values
      */
     @Override
     public int size() {
-        return 2;
+        return 3;
     }
 
     /**
@@ -75,11 +78,11 @@ public class MiniSet2<T> extends MiniSet<T> {
      * Test whether the collection contains an object equal to the specified value.
      *
      * @param   o       the object
-     * @return          {@code true} if either of the two values is equal to the object
+     * @return          {@code true} if any of the three values is equal to the object
      */
     @Override
     public boolean contains(Object o) {
-        return value0.equals(o) || value1.equals(o);
+        return value0.equals(o) || value1.equals(o) || value2.equals(o);
     }
 
     /**
@@ -99,7 +102,7 @@ public class MiniSet2<T> extends MiniSet<T> {
      */
     @Override
     public Object[] toArray() {
-        return new Object[] { value0, value1 };
+        return new Object[] { value0, value1, value2 };
     }
 
     /**
@@ -113,19 +116,20 @@ public class MiniSet2<T> extends MiniSet<T> {
     @Override
     @SuppressWarnings("unchecked")
     public <TT> TT[] toArray(TT[] a) {
-        if (a.length < 2)
-            return (TT[])(new Object[] { value0, value1 });
+        if (a.length < 3)
+            return (TT[])(new Object[] { value0, value1, value2 });
         T[] target = (T[])a;
         target[0] = value0;
         target[1] = value1;
-        if (target.length > 2)
-            target[2] = null;
+        target[2] = value2;
+        if (target.length > 3)
+            target[3] = null;
         return a;
     }
 
     /**
      * Compares the specified object with this set for equality.  Returns {@code true} if the specified object is also a
-     * set containing two values identical to those of this set.
+     * set containing three values identical to those of this set.
      *
      * @param   other   object to be compared for equality with this set
      * @return  {@code true} if the specified object is equal to this set
@@ -137,7 +141,8 @@ public class MiniSet2<T> extends MiniSet<T> {
         if (!(other instanceof Set))
             return false;
         Set<?> otherSet = (Set<?>)other;
-        return otherSet.size() == 2 && otherSet.contains(value0) && otherSet.contains(value1);
+        return otherSet.size() == 3 && otherSet.contains(value0) && otherSet.contains(value1) &&
+                otherSet.contains(value2);
     }
 
     /**
@@ -148,7 +153,7 @@ public class MiniSet2<T> extends MiniSet<T> {
      */
     @Override
     public int hashCode() {
-        return value0.hashCode() + value1.hashCode();
+        return value0.hashCode() + value1.hashCode() + value2.hashCode();
     }
 
     /**
@@ -158,7 +163,7 @@ public class MiniSet2<T> extends MiniSet<T> {
      */
     @Override
     public String toString() {
-        return "[" + stringOf(value0) + ", " + stringOf(value1) + ']';
+        return "[" + stringOf(value0) + ", " + stringOf(value1) + ", " + stringOf(value2) + ']';
     }
 
     /**
@@ -175,7 +180,7 @@ public class MiniSet2<T> extends MiniSet<T> {
          */
         @Override
         public boolean hasNext() {
-            return index < 2;
+            return index < 3;
         }
 
         /**
@@ -188,7 +193,7 @@ public class MiniSet2<T> extends MiniSet<T> {
         public T next() {
             if (!hasNext())
                 throw new NoSuchElementException();
-            T result = index == 0 ? value0 : value1;
+            T result = index == 0 ? value0 : index == 1 ? value1 : value2;
             index++;
             return result;
         }

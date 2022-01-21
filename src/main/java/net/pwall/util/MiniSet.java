@@ -219,6 +219,48 @@ public abstract class MiniSet<T> implements Set<T> {
     }
 
     /**
+     * Get a {@link MiniSet} containing three values.
+     *
+     * @param   value0      the first value
+     * @param   value1      the second value
+     * @param   value2      the third value
+     * @param   <TT>        the element type
+     * @return              the {@link MiniSet}
+     */
+    public static <TT> MiniSet<TT> of(TT value0, TT value1, TT value2) {
+        return new MiniSet3<>(value0, value1, value2);
+    }
+
+    /**
+     * Get a {@link MiniSet} containing four values.
+     *
+     * @param   value0      the first value
+     * @param   value1      the second value
+     * @param   value2      the third value
+     * @param   value3      the fourth value
+     * @param   <TT>        the element type
+     * @return              the {@link MiniSet}
+     */
+    public static <TT> MiniSet<TT> of(TT value0, TT value1, TT value2, TT value3) {
+        return new MiniSet4<>(value0, value1, value2, value3);
+    }
+
+    /**
+     * Get a {@link MiniSet} containing five values.
+     *
+     * @param   value0      the first value
+     * @param   value1      the second value
+     * @param   value2      the third value
+     * @param   value3      the fourth value
+     * @param   value4      the fifth value
+     * @param   <TT>        the element type
+     * @return              the {@link MiniSet}
+     */
+    public static <TT> MiniSet<TT> of(TT value0, TT value1, TT value2, TT value3, TT value4) {
+        return new MiniSet5<>(value0, value1, value2, value3, value4);
+    }
+
+    /**
      * Get a {@link MiniSet} with a variable number of values.
      *
      * @param   values      the values
@@ -235,6 +277,12 @@ public abstract class MiniSet<T> implements Set<T> {
             return new MiniSet1<>(values[0]);
         if (n == 2)
             return new MiniSet2<>(values[0], values[1]);
+        if (n == 3)
+            return new MiniSet3<>(values[0], values[1], values[2]);
+        if (n == 4)
+            return new MiniSet4<>(values[0], values[1], values[2], values[3]);
+        if (n == 5)
+            return new MiniSet5<>(values[0], values[1], values[2], values[3], values[4]);
         return new ImmutableSet<>(Arrays.copyOf(values, n));
     }
 

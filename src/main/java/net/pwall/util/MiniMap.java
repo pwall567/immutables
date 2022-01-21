@@ -179,6 +179,38 @@ public abstract class MiniMap<K, V> implements Map<K, V> {
     }
 
     /**
+     * Create a {@code MiniMap} to map two keys to two nominated values.
+     *
+     * @param   key0        the first key
+     * @param   value0      the first value
+     * @param   key1        the second key
+     * @param   value1      the second value
+     * @param   <KK>        the key type
+     * @param   <VV>        the value type
+     * @return              the new {@code MiniMap}
+     */
+    public static <KK, VV> Map<KK, VV> map(KK key0, VV value0, KK key1, VV value1) {
+        return new MiniMap2<>(key0, value0, key1, value1);
+    }
+
+    /**
+     * Create a {@code MiniMap} to map three keys to three nominated values.
+     *
+     * @param   key0        the first key
+     * @param   value0      the first value
+     * @param   key1        the second key
+     * @param   value1      the second value
+     * @param   key2        the third key
+     * @param   value2      the third value
+     * @param   <KK>        the key type
+     * @param   <VV>        the value type
+     * @return              the new {@code MiniMap}
+     */
+    public static <KK, VV> Map<KK, VV> map(KK key0, VV value0, KK key1, VV value1, KK key2, VV value2) {
+        return new MiniMap3<>(key0, value0, key1, value1, key2, value2);
+    }
+
+    /**
      * Create an empty {@code MiniMap}.
      *
      * @param   <KK>        the key type
@@ -200,6 +232,70 @@ public abstract class MiniMap<K, V> implements Map<K, V> {
      */
     public static <KK, VV> Map<KK, VV> of(Map.Entry<KK,VV> entry) {
         return new MiniMap1<>(entry.getKey(), entry.getValue());
+    }
+
+    /**
+     * Create a {@code MiniMap} with two {@link Map.Entry}s.
+     *
+     * @param   entry0      the first entry
+     * @param   entry1      the second entry
+     * @param   <KK>        the key type
+     * @param   <VV>        the value type
+     * @return              the new {@code MiniMap}
+     */
+    public static <KK, VV> Map<KK, VV> of(Map.Entry<KK,VV> entry0, Map.Entry<KK,VV> entry1) {
+        return new MiniMap2<>(entry0.getKey(), entry0.getValue(), entry1.getKey(), entry1.getValue());
+    }
+
+    /**
+     * Create a {@code MiniMap} with three {@link Map.Entry}s.
+     *
+     * @param   entry0      the first entry
+     * @param   entry1      the second entry
+     * @param   entry2      the third entry
+     * @param   <KK>        the key type
+     * @param   <VV>        the value type
+     * @return              the new {@code MiniMap}
+     */
+    public static <KK, VV> Map<KK, VV> of(Map.Entry<KK,VV> entry0, Map.Entry<KK,VV> entry1, Map.Entry<KK,VV> entry2) {
+        return new MiniMap3<>(entry0.getKey(), entry0.getValue(), entry1.getKey(), entry1.getValue(), entry2.getKey(),
+                entry2.getValue());
+    }
+
+    /**
+     * Create a {@code MiniMap} with a variable number of {@link Map.Entry}s.
+     *
+     * @param   entries     the first entries
+     * @param   <KK>        the key type
+     * @param   <VV>        the value type
+     * @return              the new {@code MiniMap}
+     */
+    @SafeVarargs
+    @SuppressWarnings("unchecked")
+    public static <KK, VV> Map<KK, VV> of(Map.Entry<KK,VV> ... entries) {
+        int n = entries.length;
+        if (n == 0)
+            return (Map<KK, VV>)MiniMap0.instance;
+        if (n == 1) {
+            Map.Entry<KK,VV> entry0 = entries[0];
+            return new MiniMap1<>(entry0.getKey(), entry0.getValue());
+        }
+        if (n == 2) {
+            Map.Entry<KK,VV> entry0 = entries[0];
+            Map.Entry<KK,VV> entry1 = entries[1];
+            return new MiniMap2<>(entry0.getKey(), entry0.getValue(), entry1.getKey(), entry1.getValue());
+        }
+        if (n == 3) {
+            Map.Entry<KK,VV> entry0 = entries[0];
+            Map.Entry<KK,VV> entry1 = entries[1];
+            Map.Entry<KK,VV> entry2 = entries[2];
+            return new MiniMap3<>(entry0.getKey(), entry0.getValue(), entry1.getKey(), entry1.getValue(),
+                    entry2.getKey(), entry2.getValue());
+        }
+        ImmutableMapEntry<KK, VV>[] array = ImmutableMap.createArray(n);
+        for (int i = 0; i < n; i++)
+            array[i] = ImmutableMap.entry(entries[i].getKey(), entries[i].getValue());
+        return new ImmutableMap<>(array);
     }
 
 }

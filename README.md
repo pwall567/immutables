@@ -25,7 +25,7 @@ Different implementations may be optimised for different patterns of use, and an
 case may be hopelessly slow in another.
 
 There is no argument over the implementation of the `List` interface &ndash; an implementation backed by an array gives
-the best read performance, and write performance isn't an issue for an immutable class.
+the best read performance, and write performance isn&rsquo;t an issue for an immutable class.
 But `Map` is a different matter.
 
 `Map` implementations based on hash codes give constant time performance on lookup &ndash; _O_(1).
@@ -48,6 +48,49 @@ by key, the performance is of course quadratic.)
 
 The unmarshalling of serialised data (e.g. JSON, XML) often fits the characteristics described above, and there are
 probably many other use cases that would benefit from these implementations.
+
+## Mini-Collections
+
+A related case involves small sets or maps used to validate input or to perform a simple lookup.
+Take the following example:
+```java
+    Set<String> allowableLanguages = new HashSet<>(Arrays.asList("Java", "Kotlin", "Scala"));
+
+    if (!allowableLanguages.contains(language))
+        throw new IllegalArgumentException(language);
+```
+Sometimes you have to wonder whether it would be easier to just write:
+```java
+    if (!language.equals("Java") && !language.equals("Kotlin") && !language.equals("Scala"))
+        throw new IllegalArgumentException(language);
+```
+Yes, it&rsquo;s true that the `contains` operation will complete in _O_(1) time, but only at the expense of the creation
+of a complex data structure and the hashing of each entry and each value to be compared.
+
+`MiniSet` allows the validation to be coded as:
+```java
+    Set<String> allowableLanguages = MiniSet.of("Java", "Kotlin", "Scala");
+
+    if (!allowableLanguages.contains(language))
+        throw new IllegalArgumentException(language);
+```
+The `contains` operation in this case will function similarly to the set of three `equals` comparisons, stopping when a
+match is found.
+Depending on the frequency of a hit in the first or second comparisons, this may well be faster than the _O_(1)
+operation, even without taking into consideration the time and memory overhead of constructing the `HashSet`.
+It is certainly more legible to code.
+
+This is an example of a &ldquo;loop unrolling&rdquo; optimisation &ndash; a function written for a specific number of
+entries can eliminate the overhead of the looping and counter comparison code.
+`MiniSet` classes are available for up to five entries.
+
+In a similar manner, the `MiniMap` classes provide a mechanism for specifying `Map` objects without the overhead of
+`HashMap`:
+```java
+    Map<String, String> additionalAttributes = MiniMap.map("Language", "Java");
+```
+This is likely to be of use mainly in cases where the `Map` has only one or two entries;
+`MiniMap` classes are available for up to three entries.
 
 ## User Guide
 
@@ -203,6 +246,51 @@ All operations normally available through the `Map` interface are available, but
 It is primarily intended to be used by `ImmutableMap`, but it may be used whenever an immutable map entry object is
 required.
 
+### `MiniSet`
+
+`MiniSet` is the base class of a small number of individually optimised `Set` implementations for set sizes 0 &ndash; 5.
+The classes are intended to be used mainly for lookup (`contains`) operations, but they also fulfil all the API
+requirements for an immutable `Set`.
+
+Instances of `MiniSet` may be created using the static `MiniSet.of()` function, which is overloaded to take zero or more
+parameters.
+
+To create a `MiniSet` with 3 entries:
+```java
+    Set<String> suits = MiniSet.of("Dots", "Bamboo", "Characters");
+```
+If more than 5 items are specified, the function will create an `ImmutableSet` instead.
+
+### `MiniMap`
+
+The `MiniMap` classes are a set of `Map` implementations for 0 &ndash; 3 entries.
+As with `MiniSet`, the classes meet all the API requirements of an immutable `Map`.
+
+The base class `MiniMap` has two alternative forms of static function to create a `Map` (again, with multiple overloaded
+method signatures).
+
+To create a `MiniMap` with a single entry:
+```java
+    Map<String, Boolean> options = MiniMap.map("verbose", true);
+```
+With two entries:
+```java
+    Map<String, Boolean> options = MiniMap.map("verbose", true, "debug", true);
+```
+Or three:
+```java
+    Map<String, Boolean> options = MiniMap.map("verbose", true, "debug", true, "delete", false);
+```
+No more than three entries may be specified in this manner.
+
+Alternatively, to create a `MiniMap` using a vararg list of `Map.Entry` objects:
+```java
+    Map<String, Boolean> options = MiniMap.of(MiniMap.entry("verbose", true));
+```
+(This also illustrates the use of the `MiniMap.entry()` static function to create a `Map.Entry`.)
+
+If more than 3 entries are specified, an `ImmutableMap` will be created.
+
 ## Dependency Specification
 
 The latest version of the library is 2.0, and it may be obtained from the Maven Central repository.
@@ -226,4 +314,4 @@ The latest version of the library is 2.0, and it may be obtained from the Maven 
 
 Peter Wall
 
-2022-01-09
+2022-01-21

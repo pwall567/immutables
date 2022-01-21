@@ -1,5 +1,5 @@
 /*
- * @(#) MiniMap1.java
+ * @(#) MiniMap2.java
  *
  * immutables  High-performance immutable collections
  * Copyright (c) 2022 Peter Wall
@@ -31,36 +31,42 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * An implementation of {@link MiniMap} containing a single entry.
+ * An implementation of {@link MiniMap} containing two entries.
  *
  * @author  Peter Wall
  * @param   <K>     the key type
  * @param   <V>     the value type
  */
-public class MiniMap1<K, V> extends MiniMap<K, V> {
+public class MiniMap2<K, V> extends MiniMap<K, V> {
 
-    private final K key;
-    private final V value;
+    private final K key0;
+    private final V value0;
+    private final K key1;
+    private final V value1;
 
     /**
-     * Construct a {@code MiniMap1} with the given key and value.
+     * Construct a {@code MiniMap2} with the given keys and values.
      *
-     * @param   key         the key
-     * @param   value       the value
+     * @param   key0        the first key
+     * @param   value0      the first value
+     * @param   key1        the second key
+     * @param   value1      the second value
      */
-    public MiniMap1(K key, V value) {
-        this.key = key;
-        this.value = value;
+    public MiniMap2(K key0, V value0, K key1, V value1) {
+        this.key0 = key0;
+        this.value0 = value0;
+        this.key1 = key1;
+        this.value1 = value1;
     }
 
     /**
-     * Get the number of entries (always one).
+     * Get the number of entries (always two).
      *
      * @return      the number of entries
      */
     @Override
     public int size() {
-        return 1;
+        return 2;
     }
 
     /**
@@ -81,7 +87,7 @@ public class MiniMap1<K, V> extends MiniMap<K, V> {
      */
     @Override
     public boolean containsKey(Object key) {
-        return Objects.equals(this.key, key);
+        return Objects.equals(this.key0, key) || Objects.equals(this.key1, key);
     }
 
     /**
@@ -92,7 +98,7 @@ public class MiniMap1<K, V> extends MiniMap<K, V> {
      */
     @Override
     public boolean containsValue(Object value) {
-        return Objects.equals(this.value, value);
+        return Objects.equals(this.value0, value) || Objects.equals(this.value1, value);
     }
 
     /**
@@ -103,37 +109,37 @@ public class MiniMap1<K, V> extends MiniMap<K, V> {
      */
     @Override
     public V get(Object key) {
-        return Objects.equals(this.key, key) ? value : null;
+        return Objects.equals(this.key0, key) ? value0 : Objects.equals(this.key1, key) ? value1 : null;
     }
 
     /**
-     * Get a {@link Set} of the keys in use in this map.  Returns a {@link Set} containing the single key.
+     * Get a {@link Set} of the keys in use in this map.  Returns a {@link Set} containing the two keys.
      *
      * @return              the {@link Set}
      */
     @Override
     public Set<K> keySet() {
-        return new MiniSet1<>(key);
+        return new MiniSet2<>(key0, key1);
     }
 
     /**
-     * Get a {@link Collection} of the values in this map.  Returns a {@link Collection} containing the single value.
+     * Get a {@link Collection} of the values in this map.  Returns a {@link Collection} containing the two values.
      *
      * @return              the {@link Collection}
      */
     @Override
     public Collection<V> values() {
-        return new MiniSet1<>(value);
+        return new MiniSet2<>(value0, value1);
     }
 
     /**
-     * Get a {@link Set} of the entries in this map.  Returns a {@link Set} containing the single entry.
+     * Get a {@link Set} of the entries in this map.  Returns a {@link Set} containing the two entries.
      *
      * @return              the {@link Set}
      */
     @Override
     public Set<Entry<K, V>> entrySet() {
-        return new MiniSet1<>(entry(key, value));
+        return new MiniSet2<>(entry(key0, value0), entry(key1, value1));
     }
 
     /**
@@ -150,18 +156,20 @@ public class MiniMap1<K, V> extends MiniMap<K, V> {
         if (!(other instanceof Map))
             return false;
         Map<?, ?> otherMap = (Map<?, ?>)other;
-        return otherMap.size() == 1 && otherMap.containsKey(key) && Objects.equals(value, otherMap.get(key));
+        return otherMap.size() == 2 && otherMap.containsKey(key0) && Objects.equals(value0, otherMap.get(key0)) &&
+                otherMap.containsKey(key1) && Objects.equals(value1, otherMap.get(key1));
     }
 
     /**
-     * Returns the hash code value for this map.  The hash code of a map with a single entry is defined to be the hash
-     * code of the entry.
+     * Returns the hash code value for this map.  The hash code of a map is defined to be the sum of the hash codes of
+     * each entry in the map's {@code entrySet()} view.
      *
      * @return  the hash code value for this map
      */
     @Override
     public int hashCode() {
-        return Objects.hashCode(key) ^ Objects.hashCode(value);
+        return (Objects.hashCode(key0) ^ Objects.hashCode(value0)) +
+                (Objects.hashCode(key1) ^ Objects.hashCode(value1));
     }
 
     /**
@@ -171,7 +179,7 @@ public class MiniMap1<K, V> extends MiniMap<K, V> {
      */
     @Override
     public String toString() {
-        return "{" + stringOf(key) + '=' + stringOf(value) + '}';
+        return "{" + stringOf(key0) + '=' + stringOf(value0) + ", " + stringOf(key1) + '=' + stringOf(value1) + '}';
     }
 
 }

@@ -2,7 +2,7 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [2.0] - 2022-01-09
+## [2.0] - 2022-01-21
 ### Changed
 - `ImmutableMap`: switched to use `ImmutableMapEntry` (potential breaking change)
 ### Added
