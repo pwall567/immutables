@@ -2,6 +2,11 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [2.1] - 2022-04-18
+### Changed
+- `ImmutableCollection`, `ImmutableList`, `ImmutableMap`: add indexed access to all collection types (to allow for
+  optimised iteration over sets, maps)
+
 ## [2.0] - 2022-01-21
 ### Changed
 - `ImmutableMap`: switched to use `ImmutableMapEntry` (potential breaking change)

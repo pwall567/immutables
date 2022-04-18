@@ -110,35 +110,35 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
     }
 
     /**
-     * Get a {@link Set} of the keys in use in this map.  The set is backed by the original array, and will retain the
+     * Get a {@link Set} of the keys in use in this map.  The set is backed by the original array, and retains the
      * original order.
      *
      * @return              the {@link Set}
      */
     @Override
-    public Set<K> keySet() {
+    public KeySet<K, V> keySet() {
         return new KeySet<>(array, length);
     }
 
     /**
-     * Get a {@link Collection} of the values in this map.  The collection is backed by the original array, and will
-     * retain the original order.
+     * Get a {@link Collection} of the values in this map.  The collection is backed by the original array, and retains
+     * the original order.
      *
      * @return              the {@link Collection}
      */
     @Override
-    public Collection<V> values() {
+    public ValueCollection<K, V> values() {
         return new ValueCollection<>(array, length);
     }
 
     /**
-     * Get a {@link Set} of the entries in this map.  The set is backed by the original array, and will retain the
-     * original order.
+     * Get a {@link Set} of the entries in this map.  The set is backed by the original array, and retains the original
+     * order.
      *
      * @return              the {@link Set}
      */
     @Override
-    public Set<Entry<K, V>> entrySet() {
+    public ImmutableSet<Entry<K, V>> entrySet() {
         return new ImmutableSet<>(array, length);
     }
 
@@ -523,6 +523,20 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
             return result;
         }
 
+        /**
+         * Get the key at the specified index.  This is not part of the standard {@link Set} interface, but it allows
+         * iteration over the entries of a map without needing to instantiate an {@link Iterator}.
+         *
+         * The function does not check the array index because the indexing operation on the array will do that anyway.
+         *
+         * @param   index       the index
+         * @return              the element at that index
+         * @throws  IndexOutOfBoundsException   if the index is less than 0 or greater than the length of the list
+         */
+        public K get(int index) {
+            return array[index].getKey();
+        }
+
     }
 
     /**
@@ -655,6 +669,20 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
         private <T> void copyValues(T[] target) {
             for (int i = 0; i < length; i++)
                 target[i] = (T)array[i].getValue();
+        }
+
+        /**
+         * Get the value at the specified index.  This is not part of the standard {@link Collection} interface, but it
+         * allows iteration over the entries of a map without needing to instantiate an {@link Iterator}.
+         *
+         * The function does not check the array index because the indexing operation on the array will do that anyway.
+         *
+         * @param   index       the index
+         * @return              the element at that index
+         * @throws  IndexOutOfBoundsException   if the index is less than 0 or greater than the length of the list
+         */
+        public V get(int index) {
+            return array[index].getValue();
         }
 
     }

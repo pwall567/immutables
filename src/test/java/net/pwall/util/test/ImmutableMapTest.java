@@ -2,7 +2,7 @@
  * @(#) ImmutableMapTest.java
  *
  * immutables  High-performance immutable collections
- * Copyright (c) 2021 Peter Wall
+ * Copyright (c) 2021, 2022 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -238,6 +238,32 @@ public class ImmutableMapTest {
         ImmutableMapEntry<String, Integer>[] array = ImmutableMap.createArray(1);
         assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableMap<>(array, -1));
         assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableMap<>(array, 2));
+    }
+
+    @Test
+    public void shouldAllowIndexedAccessToKeySet() {
+        List<ImmutableMapEntry<String, Integer>> list = new ArrayList<>();
+        list.add(new ImmutableMapEntry<>("alpha", 123));
+        list.add(new ImmutableMapEntry<>("beta", 456));
+        list.add(new ImmutableMapEntry<>("gamma", 789));
+        ImmutableMap<String, Integer> map = ImmutableMap.from(list);
+        ImmutableMap.KeySet<String, Integer> keySet = map.keySet();
+        assertEquals("alpha", keySet.get(0));
+        assertEquals("beta", keySet.get(1));
+        assertEquals("gamma", keySet.get(2));
+    }
+
+    @Test
+    public void shouldAllowIndexedAccessToValueCollection() {
+        List<ImmutableMapEntry<String, Integer>> list = new ArrayList<>();
+        list.add(new ImmutableMapEntry<>("alpha", 123));
+        list.add(new ImmutableMapEntry<>("beta", 456));
+        list.add(new ImmutableMapEntry<>("gamma", 789));
+        ImmutableMap<String, Integer> map = ImmutableMap.from(list);
+        ImmutableMap.ValueCollection<String, Integer> values = map.values();
+        assertEquals(123, values.get(0));
+        assertEquals(456, values.get(1));
+        assertEquals(789, values.get(2));
     }
 
 }

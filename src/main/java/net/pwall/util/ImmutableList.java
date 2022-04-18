@@ -2,7 +2,7 @@
  * @(#) ImmutableList.java
  *
  * immutables  High-performance immutable collections
- * Copyright (c) 2021 Peter Wall
+ * Copyright (c) 2021, 2022 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -59,19 +59,6 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
      */
     public ImmutableList(T[] array) {
         super(array, array.length);
-    }
-
-    /**
-     * Get the element at the specified index.  The function does not check the array index because the indexing
-     * operation on the array will do that anyway.
-     *
-     * @param   index       the index
-     * @return              the element at that index
-     * @throws  IndexOutOfBoundsException   if the index is less than 0 or greater than the length of the list
-     */
-    @Override
-    public T get(int index) {
-        return array[index];
     }
 
     /**

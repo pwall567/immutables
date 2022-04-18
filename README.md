@@ -46,6 +46,10 @@ Iteration over the entire map is also quicker for `ImmutableMap`, taking approxi
 (This is only if the iteration uses `map.entrySet()`; if the iteration uses `map.keySet()` and then retrieves each value
 by key, the performance is of course quadratic.)
 
+In a further optimisation, indexed access is allowed to all forms of collection, including `ImmutableSet` and the `Set`
+and `Collection` implementations returned by`ImmutableMap.keySet()` and `ImmutableMap.values()`.
+This makes it possible to iterate over these collections without instantiating an `Iterator` object.
+
 The unmarshalling of serialised data (e.g. JSON, XML) often fits the characteristics described above, and there are
 probably many other use cases that would benefit from these implementations.
 
@@ -293,25 +297,25 @@ If more than 3 entries are specified, an `ImmutableMap` will be created.
 
 ## Dependency Specification
 
-The latest version of the library is 2.0, and it may be obtained from the Maven Central repository.
+The latest version of the library is 2.1, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>net.pwall.util</groupId>
       <artifactId>immutables</artifactId>
-      <version>2.0</version>
+      <version>2.1</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    implementation 'net.pwall.util:immutables:2.0'
+    implementation 'net.pwall.util:immutables:2.1'
 ```
 ### Gradle (kts)
 ```kotlin
-    implementation("net.pwall.util:immutables:2.0")
+    implementation("net.pwall.util:immutables:2.1")
 ```
 
 Peter Wall
 
-2022-01-21
+2022-04-18

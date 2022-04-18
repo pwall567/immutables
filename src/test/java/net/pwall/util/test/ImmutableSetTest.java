@@ -2,7 +2,7 @@
  * @(#) ImmutableSetTest.java
  *
  * immutables  High-performance immutable collections
- * Copyright (c) 2021 Peter Wall
+ * Copyright (c) 2021, 2022 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -137,6 +137,15 @@ public class ImmutableSetTest {
         String[] array = new String[1];
         assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableSet<>(array, -1));
         assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableSet<>(array, 2));
+    }
+
+    @Test
+    public void shouldAllowIndexedAccess() {
+        String[] array = new String[] { "un", "deux", "trois" };
+        ImmutableSet<String> set = new ImmutableSet<>(array);
+        assertEquals("un", set.get(0));
+        assertEquals("deux", set.get(1));
+        assertEquals("trois", set.get(2));
     }
 
 }
