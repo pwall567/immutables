@@ -26,6 +26,7 @@
 package net.pwall.util;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -51,6 +52,28 @@ public class MiniMap1<K, V> extends MiniMap<K, V> {
     public MiniMap1(K key, V value) {
         this.key = key;
         this.value = value;
+    }
+
+    /**
+     * Construct a {@code MiniMap1} from another {@link Map} (helps with deserializing).
+     *
+     * @param   map         the other {@link Map}
+     * @throws  IllegalArgumentException if the size of the other map is not 1
+     */
+    public MiniMap1(Map<K, V> map) {
+        if (map.size() != 1)
+            throw new IllegalArgumentException("MiniMap1 size must be 1");
+        if (map instanceof MiniMap1) {
+            MiniMap1<K, V> miniMap1 = (MiniMap1<K, V>)map;
+            key = miniMap1.key;
+            value = miniMap1.value;
+        }
+        else {
+            Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
+            Map.Entry<K, V> entry = iterator.next();
+            key = entry.getKey();
+            value = entry.getValue();
+        }
     }
 
     /**

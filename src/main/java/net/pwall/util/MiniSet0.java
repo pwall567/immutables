@@ -41,6 +41,23 @@ public class MiniSet0<T> extends MiniSet<T> {
     public static final MiniSet0<?> instance = new MiniSet0<>();
 
     /**
+     * Construct a {@code MiniSet0}.
+     */
+    public MiniSet0() {
+    }
+
+    /**
+     * Construct a {@code MiniSet0} from another {@link Set} (helps with deserializing).
+     *
+     * @param   set         the other {@link Set}
+     * @throws  IllegalArgumentException if the size of the other set is not 0
+     */
+    public MiniSet0(Set<T> set) {
+        if (set.size() != 0)
+            throw new IllegalArgumentException("MiniSet0 size must be 0");
+    }
+
+    /**
      * Get the number of values (always zero).
      *
      * @return      the number of values

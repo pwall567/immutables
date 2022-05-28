@@ -58,6 +58,16 @@ public class ImmutableCollection<T> extends ImmutableCollectionBase<T, T> implem
     }
 
     /**
+     * Construct an {@code ImmutableCollection} from another {@link Collection} (helps with deserializing).
+     *
+     * @param   collection  the other {@link Collection}
+     */
+    @SuppressWarnings("unchecked")
+    public ImmutableCollection(Collection<T> collection) {
+        super((T[])collection.toArray(new Object[0]), collection.size());
+    }
+
+    /**
      * Test whether the collection contains an object equal to the specified value (which may be {@code null}).
      *
      * @param   o       the object

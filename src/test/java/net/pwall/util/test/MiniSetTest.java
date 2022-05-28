@@ -37,6 +37,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import net.pwall.util.MiniSet;
+import net.pwall.util.MiniSet0;
+import net.pwall.util.MiniSet1;
+import net.pwall.util.MiniSet2;
+import net.pwall.util.MiniSet3;
+import net.pwall.util.MiniSet4;
+import net.pwall.util.MiniSet5;
 
 public class MiniSetTest {
 
@@ -51,8 +57,8 @@ public class MiniSetTest {
         assertThrows(UnsupportedOperationException.class, () -> miniSet.add("one"));
         HashSet<String> hashSet = new HashSet<>();
         assertEquals(miniSet, hashSet);
+        assertEquals(hashSet, miniSet);
         assertEquals(miniSet.hashCode(), hashSet.hashCode());
-        assertEquals("[]", miniSet.toString());
     }
 
     @Test
@@ -70,8 +76,8 @@ public class MiniSetTest {
         HashSet<String> hashSet = new HashSet<>();
         hashSet.add("one");
         assertEquals(miniSet, hashSet);
+        assertEquals(hashSet, miniSet);
         assertEquals(miniSet.hashCode(), hashSet.hashCode());
-        assertEquals("[one]", miniSet.toString());
     }
 
     @Test
@@ -91,8 +97,8 @@ public class MiniSetTest {
         assertThrows(UnsupportedOperationException.class, () -> miniSet.add("three"));
         HashSet<String> hashSet = new HashSet<>(Arrays.asList("one", "two"));
         assertEquals(miniSet, hashSet);
+        assertEquals(hashSet, miniSet);
         assertEquals(miniSet.hashCode(), hashSet.hashCode());
-        assertEquals("[one, two]", miniSet.toString());
     }
 
     @Test
@@ -115,8 +121,131 @@ public class MiniSetTest {
         assertThrows(UnsupportedOperationException.class, () -> miniSet.add("four"));
         HashSet<String> hashSet = new HashSet<>(Arrays.asList("one", "two", "three"));
         assertEquals(miniSet, hashSet);
+        assertEquals(hashSet, miniSet);
         assertEquals(miniSet.hashCode(), hashSet.hashCode());
-        assertEquals("[one, two, three]", miniSet.toString());
+    }
+
+    @Test
+    public void shouldCreateMiniSetOfSize4() {
+        Set<String> miniSet = MiniSet.of("one", "two", "three", "four");
+        assertEquals(4, miniSet.size());
+        assertTrue(miniSet.contains("one"));
+        assertTrue(miniSet.contains("two"));
+        assertTrue(miniSet.contains("three"));
+        assertTrue(miniSet.contains("four"));
+        assertFalse(miniSet.contains("anything"));
+        assertEquals("[one, two, three, four]", miniSet.toString());
+        Iterator<String> iter = miniSet.iterator();
+        assertTrue(iter.hasNext());
+        assertEquals("one", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("two", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("three", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("four", iter.next());
+        assertFalse(iter.hasNext());
+        assertThrows(UnsupportedOperationException.class, () -> miniSet.add("five"));
+        HashSet<String> hashSet = new HashSet<>(Arrays.asList("one", "two", "three", "four"));
+        assertEquals(miniSet, hashSet);
+        assertEquals(hashSet, miniSet);
+        assertEquals(miniSet.hashCode(), hashSet.hashCode());
+    }
+
+    @Test
+    public void shouldCreateMiniSetOfSize5() {
+        Set<String> miniSet = MiniSet.of("one", "two", "three", "four", "five");
+        assertEquals(5, miniSet.size());
+        assertTrue(miniSet.contains("one"));
+        assertTrue(miniSet.contains("two"));
+        assertTrue(miniSet.contains("three"));
+        assertTrue(miniSet.contains("four"));
+        assertTrue(miniSet.contains("five"));
+        assertFalse(miniSet.contains("anything"));
+        assertEquals("[one, two, three, four, five]", miniSet.toString());
+        Iterator<String> iter = miniSet.iterator();
+        assertTrue(iter.hasNext());
+        assertEquals("one", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("two", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("three", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("four", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("five", iter.next());
+        assertFalse(iter.hasNext());
+        assertThrows(UnsupportedOperationException.class, () -> miniSet.add("six"));
+        HashSet<String> hashSet = new HashSet<>(Arrays.asList("one", "two", "three", "four", "five"));
+        assertEquals(miniSet, hashSet);
+        assertEquals(hashSet, miniSet);
+        assertEquals(miniSet.hashCode(), hashSet.hashCode());
+    }
+
+    @Test
+    public void shouldCopyMiniSet0() {
+        Set<String> miniSet = MiniSet.of();
+        assertEquals(0, miniSet.size());
+        Set<String> copy = new MiniSet0<>(miniSet);
+        assertEquals(miniSet, copy);
+    }
+
+    @Test
+    public void shouldCopyMiniSet1() {
+        Set<String> miniSet = MiniSet.of("one");
+        assertEquals(1, miniSet.size());
+        Set<String> copy = new MiniSet1<>(miniSet);
+        assertEquals(miniSet, copy);
+    }
+
+    @Test
+    public void shouldCopyMiniSet2() {
+        Set<String> miniSet = MiniSet.of("one", "two");
+        assertEquals(2, miniSet.size());
+        Set<String> copy = new MiniSet2<>(miniSet);
+        assertEquals(miniSet, copy);
+    }
+
+    @Test
+    public void shouldCopyMiniSet3() {
+        Set<String> miniSet = MiniSet.of("one", "two", "three");
+        assertEquals(3, miniSet.size());
+        Set<String> copy = new MiniSet3<>(miniSet);
+        assertEquals(miniSet, copy);
+    }
+
+    @Test
+    public void shouldCopyMiniSet4() {
+        Set<String> miniSet = MiniSet.of("one", "two", "three", "four");
+        assertEquals(4, miniSet.size());
+        Set<String> copy = new MiniSet4<>(miniSet);
+        assertEquals(miniSet, copy);
+    }
+
+    @Test
+    public void shouldCopyMiniSet5() {
+        Set<String> miniSet = MiniSet.of("one", "two", "three", "four", "five");
+        assertEquals(5, miniSet.size());
+        Set<String> copy = new MiniSet5<>(miniSet);
+        assertEquals(miniSet, copy);
+    }
+
+    @Test
+    public void shouldRejectCopyOfWrongSize() {
+        Set<String> miniSet = MiniSet.of("one");
+        Exception e = assertThrows(IllegalArgumentException.class, () -> new MiniSet0<>(miniSet));
+        assertEquals("MiniSet0 size must be 0", e.getMessage());
+        Set<String> miniSet0 = MiniSet.of();
+        e = assertThrows(IllegalArgumentException.class, () -> new MiniSet1<>(miniSet0));
+        assertEquals("MiniSet1 size must be 1", e.getMessage());
+        e = assertThrows(IllegalArgumentException.class, () -> new MiniSet2<>(miniSet0));
+        assertEquals("MiniSet2 size must be 2", e.getMessage());
+        e = assertThrows(IllegalArgumentException.class, () -> new MiniSet3<>(miniSet0));
+        assertEquals("MiniSet3 size must be 3", e.getMessage());
+        e = assertThrows(IllegalArgumentException.class, () -> new MiniSet4<>(miniSet0));
+        assertEquals("MiniSet4 size must be 4", e.getMessage());
+        e = assertThrows(IllegalArgumentException.class, () -> new MiniSet5<>(miniSet0));
+        assertEquals("MiniSet5 size must be 5", e.getMessage());
     }
 
 }

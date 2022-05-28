@@ -266,4 +266,17 @@ public class ImmutableMapTest {
         assertEquals(789, values.get(2));
     }
 
+    @Test
+    public void shouldCopyMap() {
+        List<ImmutableMapEntry<String, Integer>> list = new ArrayList<>();
+        list.add(new ImmutableMapEntry<>("alpha", 123));
+        list.add(new ImmutableMapEntry<>("beta", 456));
+        list.add(new ImmutableMapEntry<>("gamma", 789));
+        ImmutableMap<String, Integer> map = ImmutableMap.from(list);
+        ImmutableMap<String, Integer> otherMap = new ImmutableMap<>(map);
+        assertEquals(map, otherMap);
+        assertEquals(otherMap, map);
+        assertEquals(map.hashCode(), otherMap.hashCode());
+    }
+
 }

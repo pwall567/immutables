@@ -57,6 +57,16 @@ public class ImmutableSet<T> extends ImmutableCollection<T> implements Set<T> {
     }
 
     /**
+     * Construct an {@code ImmutableSet} from another {@link Set} (helps with deserializing).
+     *
+     * @param   set         the other {@link Set}
+     */
+    @SuppressWarnings("unchecked")
+    public ImmutableSet(Set<T> set) {
+        super((T[])set.toArray(new Object[0]), set.size());
+    }
+
+    /**
      * Compares the specified object with this set for equality.  Returns {@code true} if the specified object is also a
      * set, the two sets have the same size, and every member of the specified set is contained in this set (or
      * equivalently, every member of this set is contained in the specified set).  This definition ensures that the

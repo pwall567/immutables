@@ -27,6 +27,7 @@ package net.pwall.util;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -52,6 +53,29 @@ public class MiniSet3<T> extends MiniSet<T> {
         this.value0 = value0;
         this.value1 = value1;
         this.value2 = value2;
+    }
+
+    /**
+     * Construct a {@code MiniSet3} from another {@link Set} (helps with deserializing).
+     *
+     * @param   set         the other {@link Set}
+     * @throws  IllegalArgumentException if the size of the other set is not 3
+     */
+    public MiniSet3(Set<T> set) {
+        if (set.size() != 3)
+            throw new IllegalArgumentException("MiniSet3 size must be 3");
+        if (set instanceof MiniSet3) {
+            MiniSet3<T> miniSet3 = (MiniSet3<T>)set;
+            value0 = miniSet3.value0;
+            value1 = miniSet3.value1;
+            value2 = miniSet3.value2;
+        }
+        else {
+            Iterator<T> iterator = set.iterator();
+            value0 = iterator.next();
+            value1 = iterator.next();
+            value2 = iterator.next();
+        }
     }
 
     /**
@@ -82,7 +106,8 @@ public class MiniSet3<T> extends MiniSet<T> {
      */
     @Override
     public boolean contains(Object o) {
-        return value0.equals(o) || value1.equals(o) || value2.equals(o);
+        return o == null ? value0 == null || value1 == null || value2 == null :
+                o.equals(value0) || o.equals(value1) || o.equals(value2);
     }
 
     /**
@@ -153,7 +178,7 @@ public class MiniSet3<T> extends MiniSet<T> {
      */
     @Override
     public int hashCode() {
-        return value0.hashCode() + value1.hashCode() + value2.hashCode();
+        return Objects.hashCode(value0) + Objects.hashCode(value1) + Objects.hashCode(value2);
     }
 
     /**

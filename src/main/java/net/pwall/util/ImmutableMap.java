@@ -66,6 +66,27 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
     }
 
     /**
+     * Construct an {@code ImmutableMap} from another {@link Map} (helps with deserializing).
+     *
+     * @param   map         the other {@link Map}
+     */
+    public ImmutableMap(Map<K, V> map) {
+        super(createArrayFromMap(map), map.size());
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <KK, VV> ImmutableMapEntry<KK, VV>[] createArrayFromMap(Map<KK, VV> map) {
+        int n = map.size();
+        Iterator<Map.Entry<KK, VV>> entries = map.entrySet().iterator();
+        ImmutableMapEntry<?, ?>[] result = new ImmutableMapEntry[n];
+        for (int i = 0; i < n; i++) {
+            Map.Entry<KK, VV> entry = entries.next();
+            result[i] = new ImmutableMapEntry<>(entry.getKey(), entry.getValue());
+        }
+        return (ImmutableMapEntry<KK, VV>[])result;
+    }
+
+    /**
      * Test whether the map contains a key equal to the specified key (which may be {@code null}).
      *
      * @param   key         the key

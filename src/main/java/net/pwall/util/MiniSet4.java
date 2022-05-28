@@ -27,6 +27,7 @@ package net.pwall.util;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -58,6 +59,31 @@ public class MiniSet4<T> extends MiniSet<T> {
     }
 
     /**
+     * Construct a {@code MiniSet4} from another {@link Set} (helps with deserializing).
+     *
+     * @param   set         the other {@link Set}
+     * @throws  IllegalArgumentException if the size of the other set is not 4
+     */
+    public MiniSet4(Set<T> set) {
+        if (set.size() != 4)
+            throw new IllegalArgumentException("MiniSet4 size must be 4");
+        if (set instanceof MiniSet4) {
+            MiniSet4<T> miniSet4 = (MiniSet4<T>)set;
+            value0 = miniSet4.value0;
+            value1 = miniSet4.value1;
+            value2 = miniSet4.value2;
+            value3 = miniSet4.value3;
+        }
+        else {
+            Iterator<T> iterator = set.iterator();
+            value0 = iterator.next();
+            value1 = iterator.next();
+            value2 = iterator.next();
+            value3 = iterator.next();
+        }
+    }
+
+    /**
      * Get the number of values (always four).
      *
      * @return      the number of values
@@ -85,7 +111,8 @@ public class MiniSet4<T> extends MiniSet<T> {
      */
     @Override
     public boolean contains(Object o) {
-        return value0.equals(o) || value1.equals(o) || value2.equals(o) || value3.equals(o);
+        return o == null ? value0 == null || value1 == null || value2 == null || value3 == null :
+                o.equals(value0) || o.equals(value1) || o.equals(value2) || o.equals(value3);
     }
 
     /**
@@ -157,7 +184,8 @@ public class MiniSet4<T> extends MiniSet<T> {
      */
     @Override
     public int hashCode() {
-        return value0.hashCode() + value1.hashCode() + value2.hashCode() + value3.hashCode();
+        return Objects.hashCode(value0) + Objects.hashCode(value1) + Objects.hashCode(value2) +
+                Objects.hashCode(value3);
     }
 
     /**

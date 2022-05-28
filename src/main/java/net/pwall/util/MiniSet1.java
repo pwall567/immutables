@@ -51,6 +51,21 @@ public class MiniSet1<T> extends MiniSet<T> {
     }
 
     /**
+     * Construct a {@code MiniSet1} from another {@link Set} (helps with deserializing).
+     *
+     * @param   set         the other {@link Set}
+     * @throws  IllegalArgumentException if the size of the other set is not 1
+     */
+    public MiniSet1(Set<T> set) {
+        if (set.size() != 1)
+            throw new IllegalArgumentException("MiniSet1 size must be 1");
+        if (set instanceof MiniSet1)
+            value = ((MiniSet1<T>)set).value;
+        else
+            value = set.iterator().next();
+    }
+
+    /**
      * Get the number of values (always one).
      *
      * @return      the number of values
@@ -78,7 +93,7 @@ public class MiniSet1<T> extends MiniSet<T> {
      */
     @Override
     public boolean contains(Object o) {
-        return Objects.equals(value, o);
+        return Objects.equals(o, value);
     }
 
     /**

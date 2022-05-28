@@ -62,6 +62,16 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
     }
 
     /**
+     * Construct an {@code ImmutableList} from another {@link List} (helps with deserializing).
+     *
+     * @param   list        the other {@link List}
+     */
+    @SuppressWarnings("unchecked")
+    public ImmutableList(List<T> list) {
+        super((T[])list.toArray(new Object[0]), list.size());
+    }
+
+    /**
      * Find the index in the list of the first item equal to the given object (either both {@code null}, or equal
      * according to {@link Object#equals}).
      *

@@ -26,6 +26,7 @@
 package net.pwall.util;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -60,6 +61,33 @@ public class MiniMap2<K, V> extends MiniMap<K, V> {
     }
 
     /**
+     * Construct a {@code MiniMap2} from another {@link Map} (helps with deserializing).
+     *
+     * @param   map         the other {@link Map}
+     * @throws  IllegalArgumentException if the size of the other map is not 2
+     */
+    public MiniMap2(Map<K, V> map) {
+        if (map.size() != 2)
+            throw new IllegalArgumentException("MiniMap2 size must be 2");
+        if (map instanceof MiniMap2) {
+            MiniMap2<K, V> miniMap2 = (MiniMap2<K, V>)map;
+            key0 = miniMap2.key0;
+            value0 = miniMap2.value0;
+            key1 = miniMap2.key1;
+            value1 = miniMap2.value1;
+        }
+        else {
+            Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
+            Map.Entry<K, V> entry = iterator.next();
+            key0 = entry.getKey();
+            value0 = entry.getValue();
+            entry = iterator.next();
+            key1 = entry.getKey();
+            value1 = entry.getValue();
+        }
+    }
+
+    /**
      * Get the number of entries (always two).
      *
      * @return      the number of entries
@@ -87,7 +115,7 @@ public class MiniMap2<K, V> extends MiniMap<K, V> {
      */
     @Override
     public boolean containsKey(Object key) {
-        return Objects.equals(this.key0, key) || Objects.equals(this.key1, key);
+        return key == null ? key0 == null || key1 == null : key.equals(key0) || key.equals(key1);
     }
 
     /**
@@ -98,7 +126,7 @@ public class MiniMap2<K, V> extends MiniMap<K, V> {
      */
     @Override
     public boolean containsValue(Object value) {
-        return Objects.equals(this.value0, value) || Objects.equals(this.value1, value);
+        return value == null ? value0 == null || value1 == null : value.equals(value0) || value.equals(value1);
     }
 
     /**
@@ -109,7 +137,8 @@ public class MiniMap2<K, V> extends MiniMap<K, V> {
      */
     @Override
     public V get(Object key) {
-        return Objects.equals(this.key0, key) ? value0 : Objects.equals(this.key1, key) ? value1 : null;
+        return key == null ? (key0 == null ? value0 : key1 == null ? value1 :  null) :
+                (key.equals(key0) ? value0 : key.equals(key1) ? value1 : null);
     }
 
     /**

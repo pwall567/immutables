@@ -2,6 +2,12 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [2.2] - 2022-05-28
+### Changed
+- `ImmutableCollection`, `ImmutableList`, `ImmutableMap`, `ImmutableSet`: add copy constructors (helps deserialization)
+- `MiniMap(n)`, `MiniSet(n)`: add copy constructors
+- `MiniMap(n)`, `MiniSet(n)`: improve null handling
+
 ## [2.1] - 2022-04-18
 ### Changed
 - `ImmutableCollection`, `ImmutableList`, `ImmutableMap`: add indexed access to all collection types (to allow for

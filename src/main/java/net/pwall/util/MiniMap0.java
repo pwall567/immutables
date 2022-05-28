@@ -42,6 +42,23 @@ public class MiniMap0<K, V> extends MiniMap<K, V> {
     public static final MiniMap0<?, ?> instance = new MiniMap0<>();
 
     /**
+     * Construct a {@code MiniMap0}.
+     */
+    public MiniMap0() {
+    }
+
+    /**
+     * Construct a {@code MiniMap0} from another {@link Map} (helps with deserializing).
+     *
+     * @param   map         the other {@link Map}
+     * @throws  IllegalArgumentException if the size of the other map is not 0
+     */
+    public MiniMap0(Map<K, V> map) {
+        if (map.size() != 0)
+            throw new IllegalArgumentException("MiniMap0 size must be 0");
+    }
+
+    /**
      * Get the number of entries (always zero).
      *
      * @return      the number of entries

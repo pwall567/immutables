@@ -84,4 +84,17 @@ public class ImmutableCollectionTest {
         assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableCollection<>(array, 2));
     }
 
+    @Test
+    public void shouldCopyCollection() {
+        String[] array = new String[]{"tahi", "rua", "toru", "wha"};
+        ImmutableCollection<String> collection1 = new ImmutableCollection<>(array);
+        ImmutableCollection<String> collection2 = new ImmutableCollection<>(collection1);
+        assertEquals(4, collection2.size());
+        assertTrue(collection2.contains("tahi"));
+        assertTrue(collection2.contains("rua"));
+        assertTrue(collection2.contains("toru"));
+        assertTrue(collection2.contains("wha"));
+        assertEquals("[tahi, rua, toru, wha]", collection2.toString());
+    }
+
 }

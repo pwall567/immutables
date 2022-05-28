@@ -37,6 +37,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import net.pwall.util.MiniMap;
+import net.pwall.util.MiniMap0;
+import net.pwall.util.MiniMap1;
+import net.pwall.util.MiniMap2;
+import net.pwall.util.MiniMap3;
 
 public class MiniMapTest {
 
@@ -187,6 +191,64 @@ public class MiniMapTest {
         assertEquals(miniMap, hashMap);
         assertEquals(miniMap.hashCode(), hashMap.hashCode());
         assertEquals("{abc=123, def=888, ghi=27}", miniMap.toString());
+    }
+
+    @Test
+    public void shouldCopyMiniMap0() {
+        Map<String, Integer> miniMap = MiniMap.of();
+        assertEquals(0, miniMap.size());
+        Map<String, Integer> copy = new MiniMap0<>(miniMap);
+        assertEquals(0, copy.size());
+    }
+
+    @Test
+    public void shouldCopyMiniMap1() {
+        Map<String, Integer> miniMap = MiniMap.map("abc", 123);
+        assertEquals(1, miniMap.size());
+        assertEquals(123, miniMap.get("abc"));
+        Map<String, Integer> copy = new MiniMap1<>(miniMap);
+        assertEquals(1, copy.size());
+        assertEquals(123, copy.get("abc"));
+    }
+
+    @Test
+    public void shouldCopyMiniMap2() {
+        Map<String, Integer> miniMap = MiniMap.map("abc", 123, "def", 888);
+        assertEquals(2, miniMap.size());
+        assertEquals(123, miniMap.get("abc"));
+        assertEquals(888, miniMap.get("def"));
+        Map<String, Integer> copy = new MiniMap2<>(miniMap);
+        assertEquals(2, copy.size());
+        assertEquals(123, copy.get("abc"));
+        assertEquals(888, copy.get("def"));
+    }
+
+    @Test
+    public void shouldCopyMiniMap3() {
+        Map<String, Integer> miniMap = MiniMap.map("abc", 123, "def", 888, "ghi", 27);
+        assertEquals(3, miniMap.size());
+        assertEquals(123, miniMap.get("abc"));
+        assertEquals(888, miniMap.get("def"));
+        assertEquals(27, miniMap.get("ghi"));
+        Map<String, Integer> copy = new MiniMap3<>(miniMap);
+        assertEquals(3, copy.size());
+        assertEquals(123, copy.get("abc"));
+        assertEquals(888, copy.get("def"));
+        assertEquals(27, copy.get("ghi"));
+    }
+
+    @Test
+    public void shouldRejectCopyOfWrongSize() {
+        Map<String, Integer> miniMap = MiniMap.map("abc", 123);
+        Exception e = assertThrows(IllegalArgumentException.class, () -> new MiniMap0<>(miniMap));
+        assertEquals("MiniMap0 size must be 0", e.getMessage());
+        Map<String, Integer> miniMap0 = new MiniMap0<>();
+        e = assertThrows(IllegalArgumentException.class, () -> new MiniMap1<>(miniMap0));
+        assertEquals("MiniMap1 size must be 1", e.getMessage());
+        e = assertThrows(IllegalArgumentException.class, () -> new MiniMap2<>(miniMap0));
+        assertEquals("MiniMap2 size must be 2", e.getMessage());
+        e = assertThrows(IllegalArgumentException.class, () -> new MiniMap3<>(miniMap0));
+        assertEquals("MiniMap3 size must be 3", e.getMessage());
     }
 
 }

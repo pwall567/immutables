@@ -148,4 +148,16 @@ public class ImmutableSetTest {
         assertEquals("trois", set.get(2));
     }
 
+    @Test
+    public void shouldCopyImmutableSet() {
+        String[] array = new String[] { "un", "deux", "trois" };
+        ImmutableSet<String> set1 = new ImmutableSet<>(array);
+        ImmutableSet<String> set2 = new ImmutableSet<>(set1);
+        assertEquals(3, set2.size());
+        assertTrue(set2.contains("un"));
+        assertTrue(set2.contains("deux"));
+        assertTrue(set2.contains("trois"));
+        assertEquals("[un, deux, trois]", set2.toString());
+    }
+
 }

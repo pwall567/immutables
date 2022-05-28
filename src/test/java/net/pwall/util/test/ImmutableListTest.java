@@ -151,4 +151,16 @@ public class ImmutableListTest {
         assertThrows(IndexOutOfBoundsException.class, () -> new ImmutableList<>(array, 2));
     }
 
+    @Test
+    public void shouldCopyImmutableList() {
+        String[] array = new String[] { "one", "two", "three" };
+        ImmutableList<String> list1 = new ImmutableList<>(array);
+        ImmutableList<String> list2 = new ImmutableList<>(list1);
+        assertEquals(3, list2.size());
+        assertEquals("one", list2.get(0));
+        assertEquals("two", list2.get(1));
+        assertEquals("three", list2.get(2));
+        assertEquals("[one, two, three]", list2.toString());
+    }
+
 }
