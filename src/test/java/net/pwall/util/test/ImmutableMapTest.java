@@ -2,7 +2,7 @@
  * @(#) ImmutableMapTest.java
  *
  * immutables  High-performance immutable collections
- * Copyright (c) 2021, 2022 Peter Wall
+ * Copyright (c) 2021, 2022, 2023 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -277,6 +277,48 @@ public class ImmutableMapTest {
         assertEquals(map, otherMap);
         assertEquals(otherMap, map);
         assertEquals(map.hashCode(), otherMap.hashCode());
+    }
+
+    @Test
+    public void shouldAllowIndexedAccessToMapEntries() {
+        List<ImmutableMapEntry<String, Integer>> list = new ArrayList<>();
+        list.add(new ImmutableMapEntry<>("alpha", 123));
+        list.add(new ImmutableMapEntry<>("beta", 456));
+        list.add(new ImmutableMapEntry<>("gamma", 789));
+        ImmutableMap<String, Integer> map = ImmutableMap.from(list);
+        ImmutableMapEntry<String, Integer> entry0 = map.getEntry(0);
+        assertEquals("alpha", entry0.getKey());
+        assertEquals(123, entry0.getValue());
+        ImmutableMapEntry<String, Integer> entry1 = map.getEntry(1);
+        assertEquals("beta", entry1.getKey());
+        assertEquals(456, entry1.getValue());
+        ImmutableMapEntry<String, Integer> entry2 = map.getEntry(2);
+        assertEquals("gamma", entry2.getKey());
+        assertEquals(789, entry2.getValue());
+    }
+
+    @Test
+    public void shouldAllowIndexedAccessToKeys() {
+        List<ImmutableMapEntry<String, Integer>> list = new ArrayList<>();
+        list.add(new ImmutableMapEntry<>("alpha", 123));
+        list.add(new ImmutableMapEntry<>("beta", 456));
+        list.add(new ImmutableMapEntry<>("gamma", 789));
+        ImmutableMap<String, Integer> map = ImmutableMap.from(list);
+        assertEquals("alpha", map.getKey(0));
+        assertEquals("beta", map.getKey(1));
+        assertEquals("gamma", map.getKey(2));
+    }
+
+    @Test
+    public void shouldAllowIndexedAccessToValues() {
+        List<ImmutableMapEntry<String, Integer>> list = new ArrayList<>();
+        list.add(new ImmutableMapEntry<>("alpha", 123));
+        list.add(new ImmutableMapEntry<>("beta", 456));
+        list.add(new ImmutableMapEntry<>("gamma", 789));
+        ImmutableMap<String, Integer> map = ImmutableMap.from(list);
+        assertEquals(123, map.getValue(0));
+        assertEquals(456, map.getValue(1));
+        assertEquals(789, map.getValue(2));
     }
 
 }

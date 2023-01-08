@@ -44,7 +44,7 @@ only if there were 15 or more random lookup operations on each map.
 Iteration over the entire map is also quicker for `ImmutableMap`, taking approximately 60% of the time taken by
 `LinkedHashMap`.
 (This is only if the iteration uses `map.entrySet()`; if the iteration uses `map.keySet()` and then retrieves each value
-by key, the performance is of course quadratic.)
+by key, the performance is of course quadratic &ndash; _O_(_n<sup>2</sup>_).)
 
 In a further optimisation, indexed access is allowed to all forms of collection, including `ImmutableSet` and the `Set`
 and `Collection` implementations returned by`ImmutableMap.keySet()` and `ImmutableMap.values()`.
@@ -215,7 +215,7 @@ Then, there are two constructors for `ImmutableMap<K, V>`:
 ```
 and:
 ```java
-        Map<String, LineItem> map = new ImmutableMap(array);
+        Map<String, LineItem> map = new ImmutableMap(array, length);
 ```
 
 There are also these static functions:
@@ -243,6 +243,11 @@ The array is not copied (except in the case of `ImmutableMap.from(list)`), so th
 
 All operations normally available through the `Map` interface are available, but all modifying operations will cause an
 `UnsupportedOperationException`.
+
+There are also indexed operations `getEntry(n)`, `getKey(n)` and `getValue(n)` which return the `ImmutableMapEntry`, the
+key or the value at the given index.
+These allow for very fast iteration over the contents of an `ImmutableMap`, avoiding the need for creation of `Set` or
+`Iterator` objects.
 
 ### `ImmutableMapEntry`
 
@@ -297,25 +302,25 @@ If more than 3 entries are specified, an `ImmutableMap` will be created.
 
 ## Dependency Specification
 
-The latest version of the library is 2.2, and it may be obtained from the Maven Central repository.
+The latest version of the library is 2.3, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>net.pwall.util</groupId>
       <artifactId>immutables</artifactId>
-      <version>2.2</version>
+      <version>2.3</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    implementation 'net.pwall.util:immutables:2.2'
+    implementation 'net.pwall.util:immutables:2.3'
 ```
 ### Gradle (kts)
 ```kotlin
-    implementation("net.pwall.util:immutables:2.2")
+    implementation("net.pwall.util:immutables:2.3")
 ```
 
 Peter Wall
 
-2022-05-28
+2023-01-08

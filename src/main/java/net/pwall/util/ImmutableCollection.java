@@ -123,8 +123,7 @@ public class ImmutableCollection<T> extends ImmutableCollectionBase<T, T> implem
      * Get the element at the specified index.  This is not part of the standard {@link Collection} interface, but it
      * allows iteration over the members of a collection without needing to instantiate an {@link Iterator}.
      *
-     * The function does not check the array index because the indexing
-     * operation on the array will do that anyway.
+     * The function does not check the index because the indexing operation on the array will do that anyway.
      *
      * @param   index       the index
      * @return              the element at that index

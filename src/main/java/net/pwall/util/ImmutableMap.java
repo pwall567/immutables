@@ -2,7 +2,7 @@
  * @(#) ImmutableMap.java
  *
  * immutables  High-performance immutable collections
- * Copyright (c) 2021, 2022 Peter Wall
+ * Copyright (c) 2021, 2022, 2023 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -270,6 +270,45 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Get a map entry by index.  This allows for very fast iteration over the entries of an {@code ImmutableMap}.
+     *
+     * The function does not check the index because the indexing operation on the array will do that anyway.
+     *
+     * @param   index       the index
+     * @return              the entry at that index
+     * @throws  IndexOutOfBoundsException   if the index is less than 0 or greater than the size of the map
+     */
+    public final ImmutableMapEntry<K, V> getEntry(int index) {
+        return array[index];
+    }
+
+    /**
+     * Get a key by index.  This allows for very fast iteration over the keys of an {@code ImmutableMap}.
+     *
+     * The function does not check the index because the indexing operation on the array will do that anyway.
+     *
+     * @param   index       the index
+     * @return              the key at that index
+     * @throws  IndexOutOfBoundsException   if the index is less than 0 or greater than the size of the map
+     */
+    public final K getKey(int index) {
+        return array[index].getKey();
+    }
+
+    /**
+     * Get a value by index.  This allows for very fast iteration over the values of an {@code ImmutableMap}.
+     *
+     * The function does not check the index because the indexing operation on the array will do that anyway.
+     *
+     * @param   index       the index
+     * @return              the value at that index
+     * @throws  IndexOutOfBoundsException   if the index is less than 0 or greater than the size of the map
+     */
+    public final V getValue(int index) {
+        return array[index].getValue();
     }
 
     /**
