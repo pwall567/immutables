@@ -53,7 +53,7 @@ public class MiniSet0<T> extends MiniSet<T> {
      * @throws  IllegalArgumentException if the size of the other set is not 0
      */
     public MiniSet0(Set<T> set) {
-        if (set.size() != 0)
+        if (!set.isEmpty())
             throw new IllegalArgumentException("MiniSet0 size must be 0");
     }
 

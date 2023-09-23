@@ -54,7 +54,7 @@ public class MiniMap0<K, V> extends MiniMap<K, V> {
      * @throws  IllegalArgumentException if the size of the other map is not 0
      */
     public MiniMap0(Map<K, V> map) {
-        if (map.size() != 0)
+        if (!map.isEmpty())
             throw new IllegalArgumentException("MiniMap0 size must be 0");
     }
 
