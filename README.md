@@ -255,6 +255,17 @@ These allow for very fast iteration over the contents of an `ImmutableMap`, avoi
 It is primarily intended to be used by `ImmutableMap`, but it may be used whenever an immutable map entry object is
 required.
 
+### `ImmutableIterator`
+
+`ImmutableIterator` is used within the library as the object returned by `iterator()` calls on `ImmutableList` and
+`ImmutableSet`, but it may also be used to create an `Iterator` over an arbitrary subset of entries of any array.
+
+### `ImmutableListIterator`
+
+Like `ImmutableIterator`, `ImmutableListIterator` is used within the library as the object returned by `listIterator()`
+calls on `ImmutableList`, but it may also be used to create a `ListIterator` over an arbitrary subset of entries of any
+array.
+
 ### `MiniSet`
 
 `MiniSet` is the base class of a small number of individually optimised `Set` implementations for set sizes 0 &ndash; 5.
