@@ -72,6 +72,16 @@ public class ImmutableCollection<T> extends ImmutableCollectionBase<T, T> implem
     }
 
     /**
+     * Internal constructor to prevent repeating length check.
+     *
+     * @param  length   the length
+     * @param   array   the array
+     */
+    protected ImmutableCollection(int length, T[] array) {
+        super(array, length);
+    }
+
+    /**
      * Test whether the collection contains an object equal to the specified value (which may be {@code null}).
      *
      * @param   o       the object

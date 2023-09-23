@@ -46,7 +46,7 @@ public class ImmutableSet<T> extends ImmutableCollection<T> implements Set<T> {
      * @throws  IndexOutOfBoundsException if the length is less than 0 or greater than the array length
      */
     public ImmutableSet(T[] array, int length) {
-        super(array, checkLength(array, length));
+        super(checkLength(array, length), array);
     }
 
     /**
@@ -57,7 +57,7 @@ public class ImmutableSet<T> extends ImmutableCollection<T> implements Set<T> {
      * @param   array       the array
      */
     public ImmutableSet(T[] array) {
-        super(array, array.length);
+        super(array.length, array);
     }
 
     /**
@@ -67,7 +67,7 @@ public class ImmutableSet<T> extends ImmutableCollection<T> implements Set<T> {
      */
     @SuppressWarnings("unchecked")
     public ImmutableSet(Set<T> set) {
-        super((T[])set.toArray(new Object[0]), set.size());
+        super(set.size(), (T[])set.toArray(new Object[0]));
     }
 
     /**

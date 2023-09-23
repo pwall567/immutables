@@ -51,7 +51,7 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
      * @throws  IndexOutOfBoundsException if the length is less than 0 or greater than the array length
      */
     public ImmutableList(T[] array, int length) {
-        super(array, checkLength(array, length));
+        super(checkLength(array, length), array);
     }
 
     /**
@@ -62,7 +62,7 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
      * @param   array       the array
      */
     public ImmutableList(T[] array) {
-        super(array, array.length);
+        super(array.length, array);
     }
 
     /**
@@ -72,7 +72,7 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
      */
     @SuppressWarnings("unchecked")
     public ImmutableList(List<T> list) {
-        super((T[])list.toArray(new Object[0]), list.size());
+        super(list.size(), (T[])list.toArray(new Object[0]));
     }
 
     /**
