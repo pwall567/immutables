@@ -2,7 +2,7 @@
  * @(#) MiniSet0.java
  *
  * immutables  High-performance immutable collections
- * Copyright (c) 2022 Peter Wall
+ * Copyright (c) 2022, 2023 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
