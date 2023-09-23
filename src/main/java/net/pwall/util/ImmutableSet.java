@@ -38,6 +38,8 @@ public class ImmutableSet<T> extends ImmutableCollection<T> implements Set<T> {
 
     /**
      * Construct an {@code ImmutableSet} with the given array and length.
+     * <br/>
+     * **IMPORTANT &ndash; the set is immutable only if the array is not subsequently modified.**
      *
      * @param   array       the array
      * @param   length      the length (the number of array items to be considered part of the set)
@@ -49,6 +51,8 @@ public class ImmutableSet<T> extends ImmutableCollection<T> implements Set<T> {
 
     /**
      * Construct an {@code ImmutableSet} with the given array (using the entire array).
+     * <br/>
+     * **IMPORTANT &ndash; the set is immutable only if the array is not subsequently modified.**
      *
      * @param   array       the array
      */

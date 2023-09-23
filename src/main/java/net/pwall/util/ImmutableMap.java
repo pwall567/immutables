@@ -47,6 +47,8 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
 
     /**
      * Construct an {@code ImmutableMap} with the given array (of {@link ImmutableMapEntry}) and length.
+     * <br/>
+     * **IMPORTANT &ndash; the map is immutable only if the array is not subsequently modified.**
      *
      * @param   array       the array of {@link ImmutableMapEntry}
      * @param   length      the length (the number of array items to be considered part of the map)
@@ -58,6 +60,8 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
 
     /**
      * Construct an {@code ImmutableList} with the given array (using the entire array).
+     * <br/>
+     * **IMPORTANT &ndash; the map is immutable only if the array is not subsequently modified.**
      *
      * @param   array       the array of {@link ImmutableMapEntry}
      */
@@ -274,7 +278,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
 
     /**
      * Get a map entry by index.  This allows for very fast iteration over the entries of an {@code ImmutableMap}.
-     *
+     * <br/>
      * The function does not check the index because the indexing operation on the array will do that anyway.
      *
      * @param   index       the index
@@ -287,7 +291,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
 
     /**
      * Get a key by index.  This allows for very fast iteration over the keys of an {@code ImmutableMap}.
-     *
+     * <br/>
      * The function does not check the index because the indexing operation on the array will do that anyway.
      *
      * @param   index       the index
@@ -300,7 +304,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
 
     /**
      * Get a value by index.  This allows for very fast iteration over the values of an {@code ImmutableMap}.
-     *
+     * <br/>
      * The function does not check the index because the indexing operation on the array will do that anyway.
      *
      * @param   index       the index
@@ -338,6 +342,8 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
 
     /**
      * Create an {@code ImmutableMap} from the supplied array of {@link ImmutableMapEntry}.
+     * <br/>
+     * **IMPORTANT &ndash; the map is immutable only if the array is not subsequently modified.**
      *
      * @param   array       the array of {@link ImmutableMapEntry}
      * @param   <KK>        the key type
@@ -350,6 +356,8 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
 
     /**
      * Create an {@code ImmutableMap} from the supplied array of {@link ImmutableMapEntry} with the specified length.
+     * <br/>
+     * **IMPORTANT &ndash; the map is immutable only if the array is not subsequently modified.**
      *
      * @param   array       the array of {@link ImmutableMapEntry}
      * @param   length      the length (the number of array items to be considered part of the map)
@@ -586,7 +594,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
         /**
          * Get the key at the specified index.  This is not part of the standard {@link Set} interface, but it allows
          * iteration over the entries of a map without needing to instantiate an {@link Iterator}.
-         *
+         * <br/>
          * The function does not check the array index because the indexing operation on the array will do that anyway.
          *
          * @param   index       the index
@@ -734,7 +742,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
         /**
          * Get the value at the specified index.  This is not part of the standard {@link Collection} interface, but it
          * allows iteration over the entries of a map without needing to instantiate an {@link Iterator}.
-         *
+         * <br/>
          * The function does not check the array index because the indexing operation on the array will do that anyway.
          *
          * @param   index       the index

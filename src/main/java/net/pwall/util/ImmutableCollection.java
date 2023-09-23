@@ -2,7 +2,7 @@
  * @(#) ImmutableCollection.java
  *
  * immutables  High-performance immutable collections
- * Copyright (c) 2021, 2022 Peter Wall
+ * Copyright (c) 2021, 2022, 2023 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,6 +39,8 @@ public class ImmutableCollection<T> extends ImmutableCollectionBase<T, T> implem
 
     /**
      * Construct an {@code ImmutableCollection} with the given array and length.
+     * <br/>
+     * **IMPORTANT &ndash; the collection is immutable only if the array is not subsequently modified.**
      *
      * @param   array   the array
      * @param   length  the length (the number of array items to be considered part of the collection)
@@ -50,6 +52,8 @@ public class ImmutableCollection<T> extends ImmutableCollectionBase<T, T> implem
 
     /**
      * Construct an {@code ImmutableCollection} with the given array (using the entire array).
+     * <br/>
+     * **IMPORTANT &ndash; the collection is immutable only if the array is not subsequently modified.**
      *
      * @param   array   the array
      */
@@ -90,6 +94,10 @@ public class ImmutableCollection<T> extends ImmutableCollectionBase<T, T> implem
 
     /**
      * Create a copy of the underlying array.
+     * <br/>
+     * <b>NOTE:</b> as an optimisation, when the size of the collection is zero, a constant <code>emptyArray</code> (of
+     * type <code>Object[]</code>) will be returned.  This may affect identity comparisons using the result array, or
+     * any attempt to discover dynamically the class of the array items.
      *
      * @return          a copy of the active portion of the array
      */
@@ -101,6 +109,10 @@ public class ImmutableCollection<T> extends ImmutableCollectionBase<T, T> implem
     /**
      * Return a copy of the underlying array, either in the supplied array (if it fits) or in a new array of the
      * specified type.
+     * <br/>
+     * <b>NOTE:</b> as an optimisation, when the size of the collection is zero, a constant <code>emptyArray</code> (of
+     * type <code>Object[]</code>) will be returned.  This may affect identity comparisons using the result array, or
+     * any attempt to discover dynamically the class of the array items.
      *
      * @param   a       the destination array
      * @param   <TT>    the type of the destination array items
@@ -110,6 +122,8 @@ public class ImmutableCollection<T> extends ImmutableCollectionBase<T, T> implem
     @Override
     @SuppressWarnings("unchecked")
     public <TT> TT[] toArray(TT[] a) {
+        if (length == 0)
+            return (TT[])emptyArray;
         if (a.length < length)
             return (TT[])Arrays.copyOf(array, length, a.getClass());
         T[] target = (T[])a;
@@ -122,7 +136,7 @@ public class ImmutableCollection<T> extends ImmutableCollectionBase<T, T> implem
     /**
      * Get the element at the specified index.  This is not part of the standard {@link Collection} interface, but it
      * allows iteration over the members of a collection without needing to instantiate an {@link Iterator}.
-     *
+     * <br/>
      * The function does not check the index because the indexing operation on the array will do that anyway.
      *
      * @param   index       the index

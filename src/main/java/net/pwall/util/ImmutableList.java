@@ -2,7 +2,7 @@
  * @(#) ImmutableList.java
  *
  * immutables  High-performance immutable collections
- * Copyright (c) 2021, 2022 Peter Wall
+ * Copyright (c) 2021, 2022, 2023 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,6 +43,8 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
 
     /**
      * Construct an {@code ImmutableList} with the given array and length.
+     * <br/>
+     * **IMPORTANT &ndash; the list is immutable only if the array is not subsequently modified.**
      *
      * @param   array       the array
      * @param   length      the length (the number of array items to be considered part of the list)
@@ -54,6 +56,8 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
 
     /**
      * Construct an {@code ImmutableList} with the given array (using the entire array).
+     * <br/>
+     * **IMPORTANT &ndash; the list is immutable only if the array is not subsequently modified.**
      *
      * @param   array       the array
      */
@@ -261,6 +265,8 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
 
     /**
      * Get an {@code ImmutableList} using the supplied array.  If the array length is zero, the empty list is returned.
+     * <br/>
+     * **IMPORTANT &ndash; the list is immutable only if the array is not subsequently modified.**
      *
      * @param   array       the array
      * @param   <TT>        the element type
@@ -272,6 +278,8 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
 
     /**
      * Get an {@code ImmutableList} using the supplied array.  If the array length is zero, the empty list is returned.
+     * <br/>
+     * **IMPORTANT &ndash; the list is immutable only if the array is not subsequently modified.**
      *
      * @param   array       the array
      * @param   length      the length (the number of array items to be considered part of the list)

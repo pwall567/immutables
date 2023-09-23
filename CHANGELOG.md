@@ -2,6 +2,10 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [Unreleased]
+### Changed
+- `ImmutableCollection`, `ImmutableList`, `ImmutableMap`, `ImmutableSet`: added clarifying JavaDoc
+
 ## [2.3] - 2023-01-08
 ### Changed
 - `ImmutableMap`: added `getEntry()`, `getKey()` and `getValue()` functions
