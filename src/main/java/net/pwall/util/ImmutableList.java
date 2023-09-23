@@ -43,7 +43,7 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
 
     /**
      * Construct an {@code ImmutableList} with the given array and length.
-     * <br/>
+     * <br>
      * **IMPORTANT &ndash; the list is immutable only if the array is not subsequently modified.**
      *
      * @param   array       the array
@@ -56,7 +56,7 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
 
     /**
      * Construct an {@code ImmutableList} with the given array (using the entire array).
-     * <br/>
+     * <br>
      * **IMPORTANT &ndash; the list is immutable only if the array is not subsequently modified.**
      *
      * @param   array       the array
@@ -279,7 +279,7 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
 
     /**
      * Get an {@code ImmutableList} using the supplied array.  If the array length is zero, the empty list is returned.
-     * <br/>
+     * <br>
      * **IMPORTANT &ndash; the list is immutable only if the array is not subsequently modified.**
      *
      * @param   array       the array
@@ -292,7 +292,7 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
 
     /**
      * Get an {@code ImmutableList} using the supplied array.  If the array length is zero, the empty list is returned.
-     * <br/>
+     * <br>
      * **IMPORTANT &ndash; the list is immutable only if the array is not subsequently modified.**
      *
      * @param   array       the array
