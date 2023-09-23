@@ -163,4 +163,30 @@ public class ImmutableListTest {
         assertEquals("[one, two, three]", list2.toString());
     }
 
+    @Test
+    public void shouldCreateSublist() {
+        String[] array = new String[] { "one", "two", "three", "four", "five" };
+        ImmutableList<String> list = new ImmutableList<>(array);
+        ImmutableList<String> sublist1 = list.subList(0, 3);
+        assertEquals(3, sublist1.size());
+        assertEquals("one", sublist1.get(0));
+        assertEquals("two", sublist1.get(1));
+        assertEquals("three", sublist1.get(2));
+        ImmutableList<String> sublist2 = list.subList(2, 5);
+        assertEquals(3, sublist2.size());
+        assertEquals("three", sublist2.get(0));
+        assertEquals("four", sublist2.get(1));
+        assertEquals("five", sublist2.get(2));
+    }
+
+    @Test
+    public void shouldRejectAttemptToCreateSublistWithIncorrectRange() {
+        String[] array = new String[] { "one", "two", "three", "four", "five" };
+        ImmutableList<String> list = new ImmutableList<>(array);
+        assertThrows(IndexOutOfBoundsException.class, () -> list.subList(-1, 3));
+        assertThrows(IndexOutOfBoundsException.class, () -> list.subList(0, 6));
+        assertThrows(IndexOutOfBoundsException.class, () -> list.subList(1, 6));
+        assertThrows(IndexOutOfBoundsException.class, () -> list.subList(4, 3));
+    }
+
 }

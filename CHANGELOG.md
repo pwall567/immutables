@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `pom.xml`: fixed repository reference
 - `ImmutableCollection`, `ImmutableList`, `ImmutableSet`: optimised constructors (removed duplicate length checks)
 - `ImmutableIterator`, `ImmutableListIterator`: made constructors public
+- `ImmutableList`: optimised `sublist()`
 
 ## [2.3] - 2023-01-08
 ### Changed

@@ -76,6 +76,16 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
     }
 
     /**
+     * Internal constructor to prevent repeating length check.
+     *
+     * @param  length   the length
+     * @param   array   the array
+     */
+    private ImmutableList(int length, T[] array) {
+        super(length, array);
+    }
+
+    /**
      * Find the index in the list of the first item equal to the given object (either both {@code null}, or equal
      * according to {@link Object#equals}).
      *
@@ -150,8 +160,12 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
      */
     @Override
     public ImmutableList<T> subList(int fromIndex, int toIndex) {
-        if (fromIndex == 0 && toIndex == length)
-            return this;
+        if (fromIndex == 0) {
+            if (toIndex == length)
+                return this;
+            if (toIndex >= 0 && toIndex < length)
+                return new ImmutableList<>(toIndex, array);
+        }
         if (fromIndex < 0 || toIndex > length || toIndex < fromIndex)
             throw new IndexOutOfBoundsException();
         int newLength = toIndex - fromIndex;
