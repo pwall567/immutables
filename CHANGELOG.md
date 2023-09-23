@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `MiniMap0`, `MiniSet0`: minor optimisations
 - `pom.xml`: fixed repository reference
 - `ImmutableCollection`, `ImmutableList`, `ImmutableSet`: optimised constructors (removed duplicate length checks)
+- `ImmutableIterator`, `ImmutableListIterator`: made constructors public
 
 ## [2.3] - 2023-01-08
 ### Changed

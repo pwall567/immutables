@@ -2,7 +2,7 @@
  * @(#) ImmutableListIterator.java
  *
  * immutables  High-performance immutable collections
- * Copyright (c) 2021 Peter Wall
+ * Copyright (c) 2021, 2023 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,7 @@ public class ImmutableListIterator<T> extends ImmutableIterator<T> implements Li
      * @param   length  the length (the number of array items to be considered part of the collection)
      * @param   index   the starting index
      */
-    ImmutableListIterator(T[] array, int length, int index) {
+    public ImmutableListIterator(T[] array, int length, int index) {
         super(array, length, index);
     }
 
