@@ -313,25 +313,25 @@ If more than 3 entries are specified, an `ImmutableMap` will be created.
 
 ## Dependency Specification
 
-The latest version of the library is 2.3, and it may be obtained from the Maven Central repository.
+The latest version of the library is 2.4, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>net.pwall.util</groupId>
       <artifactId>immutables</artifactId>
-      <version>2.3</version>
+      <version>2.4</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    implementation 'net.pwall.util:immutables:2.3'
+    implementation 'net.pwall.util:immutables:2.4'
 ```
 ### Gradle (kts)
 ```kotlin
-    implementation("net.pwall.util:immutables:2.3")
+    implementation("net.pwall.util:immutables:2.4")
 ```
 
 Peter Wall
 
-2023-01-08
+2023-09-24

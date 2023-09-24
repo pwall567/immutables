@@ -2,7 +2,7 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [Unreleased]
+## [2.4] - 2023-09-24
 ### Changed
 - `ImmutableCollection`, `ImmutableList`, `ImmutableMap`, `ImmutableSet`: added clarifying JavaDoc
 - `MiniMap0`, `MiniSet0`: minor optimisations
