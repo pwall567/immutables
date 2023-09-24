@@ -71,6 +71,16 @@ public class ImmutableSet<T> extends ImmutableCollection<T> implements Set<T> {
     }
 
     /**
+     * Internal constructor to prevent repeating length check.
+     *
+     * @param  length   the length
+     * @param   array   the array
+     */
+    private ImmutableSet(int length, T[] array) {
+        super(length, array);
+    }
+
+    /**
      * Compares the specified object with this set for equality.  Returns {@code true} if the specified object is also a
      * set, the two sets have the same size, and every member of the specified set is contained in this set (or
      * equivalently, every member of this set is contained in the specified set).  This definition ensures that the
@@ -118,7 +128,7 @@ public class ImmutableSet<T> extends ImmutableCollection<T> implements Set<T> {
      */
     @SuppressWarnings("unchecked")
     public static <TT> ImmutableSet<TT> emptySet() {
-        return new ImmutableSet<>((TT[])emptyArray);
+        return new ImmutableSet<>(0, (TT[])emptyArray);
     }
 
     /**
@@ -129,7 +139,8 @@ public class ImmutableSet<T> extends ImmutableCollection<T> implements Set<T> {
      * @return              the set
      */
     public static <TT> ImmutableSet<TT> setOf(TT[] array) {
-        return array.length == 0 ? emptySet() : new ImmutableSet<>(array, array.length);
+        int size = array.length;
+        return size == 0 ? emptySet() : new ImmutableSet<>(size, array);
     }
 
     /**

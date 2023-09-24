@@ -274,7 +274,7 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
      */
     @SuppressWarnings("unchecked")
     public static <TT> ImmutableList<TT> emptyList() {
-        return new ImmutableList<>((TT[])emptyArray);
+        return new ImmutableList<>(0, (TT[])emptyArray);
     }
 
     /**
@@ -287,7 +287,8 @@ public class ImmutableList<T> extends ImmutableCollection<T> implements List<T>,
      * @return              the list
      */
     public static <TT> ImmutableList<TT> listOf(TT[] array) {
-        return array.length == 0 ? emptyList() : new ImmutableList<>(array);
+        int size = array.length;
+        return size == 0 ? emptyList() : new ImmutableList<>(size, array);
     }
 
     /**

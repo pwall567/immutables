@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `ImmutableCollection`, `ImmutableList`, `ImmutableSet`: optimised constructors (removed duplicate length checks)
 - `ImmutableIterator`, `ImmutableListIterator`: made constructors public
 - `ImmutableList`: optimised `sublist()`
+- `ImmutableList`, `ImmutableMap`, `ImmutableSet`: modified static functions to use optimised constructors
 
 ## [2.3] - 2023-01-08
 ### Changed

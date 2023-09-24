@@ -78,6 +78,16 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
         super(createArrayFromMap(map), map.size());
     }
 
+    /**
+     * Internal constructor to prevent repeating length check.
+     *
+     * @param  length   the length
+     * @param   array   the array
+     */
+    private ImmutableMap(int length, ImmutableMapEntry<K, V>[] array) {
+        super(array, length);
+    }
+
     @SuppressWarnings("unchecked")
     private static <KK, VV> ImmutableMapEntry<KK, VV>[] createArrayFromMap(Map<KK, VV> map) {
         int n = map.size();
@@ -325,7 +335,8 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
      */
     @SuppressWarnings("unchecked")
     public static <KK, VV> ImmutableMap<KK, VV> from(List<ImmutableMapEntry<KK, VV>> list) {
-        return list.isEmpty() ? emptyMap() : new ImmutableMap<>(list.toArray(new ImmutableMapEntry[0]));
+        int size = list.size();
+        return size == 0 ? emptyMap() : new ImmutableMap<>(size, list.toArray(new ImmutableMapEntry[0]));
     }
 
     /**
@@ -337,7 +348,7 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
      */
     @SuppressWarnings("unchecked")
     public static <KK, VV> ImmutableMap<KK, VV> emptyMap() {
-        return new ImmutableMap<>((ImmutableMapEntry<KK, VV>[])emptyEntryArray);
+        return new ImmutableMap<>(0, (ImmutableMapEntry<KK, VV>[])emptyEntryArray);
     }
 
     /**
@@ -351,7 +362,8 @@ public class ImmutableMap<K, V> extends ImmutableBase<ImmutableMapEntry<K, V>> i
      * @return              the new {@code ImmutableMap}
      */
     public static <KK, VV> ImmutableMap<KK, VV> mapOf(ImmutableMapEntry<KK, VV>[] array) {
-        return array.length == 0 ? emptyMap() : new ImmutableMap<>(array, array.length);
+        int size = array.length;
+        return size == 0 ? emptyMap() : new ImmutableMap<>(size, array);
     }
 
     /**
