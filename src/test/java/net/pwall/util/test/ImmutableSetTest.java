@@ -2,7 +2,7 @@
  * @(#) ImmutableSetTest.java
  *
  * immutables  High-performance immutable collections
- * Copyright (c) 2021, 2022 Peter Wall
+ * Copyright (c) 2021, 2022, 2024 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,11 +28,11 @@ package net.pwall.util.test;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import net.pwall.util.ImmutableSet;
 

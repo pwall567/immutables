@@ -2,7 +2,7 @@
  * @(#) ImmutableCollection.java
  *
  * immutables  High-performance immutable collections
- * Copyright (c) 2021, 2022, 2023 Peter Wall
+ * Copyright (c) 2021, 2022, 2023, 2024 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -146,14 +146,29 @@ public class ImmutableCollection<T> extends ImmutableCollectionBase<T, T> implem
     /**
      * Get the element at the specified index.  This is not part of the standard {@link Collection} interface, but it
      * allows iteration over the members of a collection without needing to instantiate an {@link Iterator}.
-     * <br>
-     * The function does not check the index because the indexing operation on the array will do that anyway.
      *
      * @param   index       the index
      * @return              the element at that index
-     * @throws  IndexOutOfBoundsException   if the index is less than 0 or greater than the length of the list
+     * @throws  IndexOutOfBoundsException   if the index is less than 0 or beyond the end of the collection
      */
     public T get(int index) {
+        return get(array, length, index);
+    }
+
+    /**
+     * Get the element of an array at the specified index, where the array may be longer than the number of elements
+     * allowed to be accessed.
+     *
+     * @param   array   the array
+     * @param   length  the number of elements in the array allowed to be accessed
+     * @param   index   the index
+     * @param   <TT>    the type of the array items
+     * @return          the element at that index
+     * @throws  IndexOutOfBoundsException   if the index is less than 0 or beyond the allowed number of elements
+     */
+    public static <TT> TT get(TT[] array, int length, int index) {
+        if (index < 0 || index >= length)
+            throw new IndexOutOfBoundsException(String.valueOf(index));
         return array[index];
     }
 

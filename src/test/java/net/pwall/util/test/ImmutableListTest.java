@@ -2,7 +2,7 @@
  * @(#) ImmutableListTest.java
  *
  * immutables  High-performance immutable collections
- * Copyright (c) 2021, 2023 Peter Wall
+ * Copyright (c) 2021, 2023, 2024 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,12 +28,12 @@ package net.pwall.util.test;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import net.pwall.util.ImmutableList;
 
@@ -187,6 +187,16 @@ public class ImmutableListTest {
         assertThrows(IndexOutOfBoundsException.class, () -> list.subList(0, 6));
         assertThrows(IndexOutOfBoundsException.class, () -> list.subList(1, 6));
         assertThrows(IndexOutOfBoundsException.class, () -> list.subList(4, 3));
+    }
+
+    @Test
+    public void shouldCalculateIndexOf() {
+        String[] array = new String[] { "one", "two", "three", "four", "five" };
+        ImmutableList<String> list = new ImmutableList<>(array);
+        assertEquals(2, list.indexOf("three"));
+        assertEquals(0, list.indexOf("one"));
+        assertEquals(4, list.indexOf("five"));
+        assertEquals(-1, list.indexOf("six"));
     }
 
 }

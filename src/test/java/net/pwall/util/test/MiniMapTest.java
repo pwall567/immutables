@@ -2,7 +2,7 @@
  * @(#) MiniMapTest.java
  *
  * immutables  High-performance immutable collections
- * Copyright (c) 2022 Peter Wall
+ * Copyright (c) 2022, 2024 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import net.pwall.util.MiniMap;
 import net.pwall.util.MiniMap0;
@@ -72,7 +72,7 @@ public class MiniMapTest {
         assertFalse(miniMap.containsKey("xyz"));
         assertTrue(miniMap.containsValue(123));
         assertFalse(miniMap.containsValue(456));
-        assertEquals(123, miniMap.get("abc"));
+        assertEquals(new Integer(123), miniMap.get("abc"));
         assertThrows(UnsupportedOperationException.class, () -> miniMap.put("xyz", 456));
         Iterator<String> keys = miniMap.keySet().iterator();
         assertTrue(keys.hasNext());
@@ -80,13 +80,13 @@ public class MiniMapTest {
         assertFalse(keys.hasNext());
         Iterator<Integer> values = miniMap.values().iterator();
         assertTrue(values.hasNext());
-        assertEquals(123, values.next());
+        assertEquals(new Integer(123), values.next());
         assertFalse(values.hasNext());
         Iterator<Map.Entry<String, Integer>> entries = miniMap.entrySet().iterator();
         assertTrue(entries.hasNext());
         Map.Entry<String, Integer> entry = entries.next();
         assertEquals("abc", entry.getKey());
-        assertEquals(123, entry.getValue());
+        assertEquals(new Integer(123), entry.getValue());
         assertFalse(entries.hasNext());
         HashMap<String, Integer> hashMap = new HashMap<>();
         hashMap.put("abc", 123);
@@ -105,8 +105,8 @@ public class MiniMapTest {
         assertTrue(miniMap.containsValue(123));
         assertTrue(miniMap.containsValue(888));
         assertFalse(miniMap.containsValue(456));
-        assertEquals(123, miniMap.get("abc"));
-        assertEquals(888, miniMap.get("def"));
+        assertEquals(new Integer(123), miniMap.get("abc"));
+        assertEquals(new Integer(888), miniMap.get("def"));
         assertThrows(UnsupportedOperationException.class, () -> miniMap.put("xyz", 456));
         Iterator<String> keys = miniMap.keySet().iterator();
         assertTrue(keys.hasNext());
@@ -116,19 +116,19 @@ public class MiniMapTest {
         assertFalse(keys.hasNext());
         Iterator<Integer> values = miniMap.values().iterator();
         assertTrue(values.hasNext());
-        assertEquals(123, values.next());
+        assertEquals(new Integer(123), values.next());
         assertTrue(values.hasNext());
-        assertEquals(888, values.next());
+        assertEquals(new Integer(888), values.next());
         assertFalse(values.hasNext());
         Iterator<Map.Entry<String, Integer>> entries = miniMap.entrySet().iterator();
         assertTrue(entries.hasNext());
         Map.Entry<String, Integer> entry = entries.next();
         assertEquals("abc", entry.getKey());
-        assertEquals(123, entry.getValue());
+        assertEquals(new Integer(123), entry.getValue());
         assertTrue(entries.hasNext());
         entry = entries.next();
         assertEquals("def", entry.getKey());
-        assertEquals(888, entry.getValue());
+        assertEquals(new Integer(888), entry.getValue());
         assertFalse(entries.hasNext());
         HashMap<String, Integer> hashMap = new HashMap<>();
         hashMap.put("abc", 123);
@@ -150,9 +150,9 @@ public class MiniMapTest {
         assertTrue(miniMap.containsValue(888));
         assertTrue(miniMap.containsValue(27));
         assertFalse(miniMap.containsValue(456));
-        assertEquals(123, miniMap.get("abc"));
-        assertEquals(27, miniMap.get("ghi"));
-        assertEquals(888, miniMap.get("def"));
+        assertEquals(new Integer(123), miniMap.get("abc"));
+        assertEquals(new Integer(27), miniMap.get("ghi"));
+        assertEquals(new Integer(888), miniMap.get("def"));
         assertThrows(UnsupportedOperationException.class, () -> miniMap.put("xyz", 456));
         Iterator<String> keys = miniMap.keySet().iterator();
         assertTrue(keys.hasNext());
@@ -164,25 +164,25 @@ public class MiniMapTest {
         assertFalse(keys.hasNext());
         Iterator<Integer> values = miniMap.values().iterator();
         assertTrue(values.hasNext());
-        assertEquals(123, values.next());
+        assertEquals(new Integer(123), values.next());
         assertTrue(values.hasNext());
-        assertEquals(888, values.next());
+        assertEquals(new Integer(888), values.next());
         assertTrue(values.hasNext());
-        assertEquals(27, values.next());
+        assertEquals(new Integer(27), values.next());
         assertFalse(values.hasNext());
         Iterator<Map.Entry<String, Integer>> entries = miniMap.entrySet().iterator();
         assertTrue(entries.hasNext());
         Map.Entry<String, Integer> entry = entries.next();
         assertEquals("abc", entry.getKey());
-        assertEquals(123, entry.getValue());
+        assertEquals(new Integer(123), entry.getValue());
         assertTrue(entries.hasNext());
         entry = entries.next();
         assertEquals("def", entry.getKey());
-        assertEquals(888, entry.getValue());
+        assertEquals(new Integer(888), entry.getValue());
         assertTrue(entries.hasNext());
         entry = entries.next();
         assertEquals("ghi", entry.getKey());
-        assertEquals(27, entry.getValue());
+        assertEquals(new Integer(27), entry.getValue());
         assertFalse(entries.hasNext());
         HashMap<String, Integer> hashMap = new HashMap<>();
         hashMap.put("abc", 123);
@@ -205,36 +205,36 @@ public class MiniMapTest {
     public void shouldCopyMiniMap1() {
         Map<String, Integer> miniMap = MiniMap.map("abc", 123);
         assertEquals(1, miniMap.size());
-        assertEquals(123, miniMap.get("abc"));
+        assertEquals(new Integer(123), miniMap.get("abc"));
         Map<String, Integer> copy = new MiniMap1<>(miniMap);
         assertEquals(1, copy.size());
-        assertEquals(123, copy.get("abc"));
+        assertEquals(new Integer(123), copy.get("abc"));
     }
 
     @Test
     public void shouldCopyMiniMap2() {
         Map<String, Integer> miniMap = MiniMap.map("abc", 123, "def", 888);
         assertEquals(2, miniMap.size());
-        assertEquals(123, miniMap.get("abc"));
-        assertEquals(888, miniMap.get("def"));
+        assertEquals(new Integer(123), miniMap.get("abc"));
+        assertEquals(new Integer(888), miniMap.get("def"));
         Map<String, Integer> copy = new MiniMap2<>(miniMap);
         assertEquals(2, copy.size());
-        assertEquals(123, copy.get("abc"));
-        assertEquals(888, copy.get("def"));
+        assertEquals(new Integer(123), copy.get("abc"));
+        assertEquals(new Integer(888), copy.get("def"));
     }
 
     @Test
     public void shouldCopyMiniMap3() {
         Map<String, Integer> miniMap = MiniMap.map("abc", 123, "def", 888, "ghi", 27);
         assertEquals(3, miniMap.size());
-        assertEquals(123, miniMap.get("abc"));
-        assertEquals(888, miniMap.get("def"));
-        assertEquals(27, miniMap.get("ghi"));
+        assertEquals(new Integer(123), miniMap.get("abc"));
+        assertEquals(new Integer(888), miniMap.get("def"));
+        assertEquals(new Integer(27), miniMap.get("ghi"));
         Map<String, Integer> copy = new MiniMap3<>(miniMap);
         assertEquals(3, copy.size());
-        assertEquals(123, copy.get("abc"));
-        assertEquals(888, copy.get("def"));
-        assertEquals(27, copy.get("ghi"));
+        assertEquals(new Integer(123), copy.get("abc"));
+        assertEquals(new Integer(888), copy.get("def"));
+        assertEquals(new Integer(27), copy.get("ghi"));
     }
 
     @Test

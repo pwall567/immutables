@@ -2,6 +2,12 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [2.5] - 2024-02-18
+### Changed
+- `ImmutableCollection`: fixed bug in indexed access
+- `pom.xml`, tests: switched from Junit 5 to Junit 4 (more stable)
+- `pom.xml`: updated plugin versions
+
 ## [2.4] - 2023-09-24
 ### Changed
 - `ImmutableCollection`, `ImmutableList`, `ImmutableMap`, `ImmutableSet`: added clarifying JavaDoc

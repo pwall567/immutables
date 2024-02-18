@@ -2,7 +2,7 @@
  * @(#) ImmutableMapTest.java
  *
  * immutables  High-performance immutable collections
- * Copyright (c) 2021, 2022, 2023 Peter Wall
+ * Copyright (c) 2021, 2022, 2023, 2024 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,13 +33,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import net.pwall.util.ImmutableMap;
 import net.pwall.util.ImmutableMapEntry;
@@ -56,9 +56,9 @@ public class ImmutableMapTest {
         assertFalse(ImmutableMap.containsKey(list, "delta"));
         ImmutableMap<String, Integer> map = ImmutableMap.from(list);
         assertEquals(3, map.size());
-        assertEquals(123, map.get("alpha"));
-        assertEquals(456, map.get("beta"));
-        assertEquals(789, map.get("gamma"));
+        assertEquals(new Integer(123), map.get("alpha"));
+        assertEquals(new Integer(456), map.get("beta"));
+        assertEquals(new Integer(789), map.get("gamma"));
         assertEquals("{alpha=123, beta=456, gamma=789}", map.toString());
     }
 
@@ -72,9 +72,9 @@ public class ImmutableMapTest {
         assertFalse(ImmutableMap.containsKey(array, 3, "delta"));
         ImmutableMap<String, Integer> map = new ImmutableMap<>(array, 3);
         assertEquals(3, map.size());
-        assertEquals(123, map.get("alpha"));
-        assertEquals(456, map.get("beta"));
-        assertEquals(789, map.get("gamma"));
+        assertEquals(new Integer(123), map.get("alpha"));
+        assertEquals(new Integer(456), map.get("beta"));
+        assertEquals(new Integer(789), map.get("gamma"));
     }
 
     @Test
@@ -86,9 +86,9 @@ public class ImmutableMapTest {
         list.add(ImmutableMap.entry("gamma", null));
         ImmutableMap<String, Integer> map = ImmutableMap.from(list);
         assertEquals(4, map.size());
-        assertEquals(123, map.get("alpha"));
-        assertEquals(456, map.get("beta"));
-        assertEquals(888, map.get(null));
+        assertEquals(new Integer(123), map.get("alpha"));
+        assertEquals(new Integer(456), map.get("beta"));
+        assertEquals(new Integer(888), map.get(null));
         assertTrue(map.containsKey("gamma"));
         assertNull(map.get("gamma"));
         assertEquals("{alpha=123, beta=456, null=888, gamma=null}", map.toString());
@@ -152,11 +152,11 @@ public class ImmutableMapTest {
         assertTrue(values.contains(789));
         Iterator<Integer> iterator = values.iterator();
         assertTrue(iterator.hasNext());
-        assertEquals(123, iterator.next());
+        assertEquals(new Integer(123), iterator.next());
         assertTrue(iterator.hasNext());
-        assertEquals(456, iterator.next());
+        assertEquals(new Integer(456), iterator.next());
         assertTrue(iterator.hasNext());
-        assertEquals(789, iterator.next());
+        assertEquals(new Integer(789), iterator.next());
         assertFalse(iterator.hasNext());
     }
 
@@ -221,16 +221,16 @@ public class ImmutableMapTest {
         Collection<Integer> values2 = map2.values();
         Iterator<Integer> valueIterator2 = values2.iterator();
         assertTrue(valueIterator2.hasNext());
-        assertEquals(999, valueIterator2.next());
+        assertEquals(new Integer(999), valueIterator2.next());
         assertFalse(valueIterator2.hasNext());
         assertTrue(map2.containsKey("omega"));
         assertTrue(map2.containsValue(999));
-        assertEquals(999, map2.get("omega"));
+        assertEquals(new Integer(999), map2.get("omega"));
         ImmutableMap<String, Integer> map3 = ImmutableMap.mapOf(array, 1);
         assertEquals(1, map3.size());
         assertTrue(map3.containsKey("omega"));
         assertTrue(map3.containsValue(999));
-        assertEquals(999, map3.get("omega"));
+        assertEquals(new Integer(999), map3.get("omega"));
     }
 
     @Test
@@ -261,9 +261,9 @@ public class ImmutableMapTest {
         list.add(new ImmutableMapEntry<>("gamma", 789));
         ImmutableMap<String, Integer> map = ImmutableMap.from(list);
         ImmutableMap.ValueCollection<String, Integer> values = map.values();
-        assertEquals(123, values.get(0));
-        assertEquals(456, values.get(1));
-        assertEquals(789, values.get(2));
+        assertEquals(new Integer(123), values.get(0));
+        assertEquals(new Integer(456), values.get(1));
+        assertEquals(new Integer(789), values.get(2));
     }
 
     @Test
@@ -288,13 +288,13 @@ public class ImmutableMapTest {
         ImmutableMap<String, Integer> map = ImmutableMap.from(list);
         ImmutableMapEntry<String, Integer> entry0 = map.getEntry(0);
         assertEquals("alpha", entry0.getKey());
-        assertEquals(123, entry0.getValue());
+        assertEquals(new Integer(123), entry0.getValue());
         ImmutableMapEntry<String, Integer> entry1 = map.getEntry(1);
         assertEquals("beta", entry1.getKey());
-        assertEquals(456, entry1.getValue());
+        assertEquals(new Integer(456), entry1.getValue());
         ImmutableMapEntry<String, Integer> entry2 = map.getEntry(2);
         assertEquals("gamma", entry2.getKey());
-        assertEquals(789, entry2.getValue());
+        assertEquals(new Integer(789), entry2.getValue());
     }
 
     @Test
@@ -316,9 +316,9 @@ public class ImmutableMapTest {
         list.add(new ImmutableMapEntry<>("beta", 456));
         list.add(new ImmutableMapEntry<>("gamma", 789));
         ImmutableMap<String, Integer> map = ImmutableMap.from(list);
-        assertEquals(123, map.getValue(0));
-        assertEquals(456, map.getValue(1));
-        assertEquals(789, map.getValue(2));
+        assertEquals(new Integer(123), map.getValue(0));
+        assertEquals(new Integer(456), map.getValue(1));
+        assertEquals(new Integer(789), map.getValue(2));
     }
 
 }
