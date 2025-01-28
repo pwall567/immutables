@@ -1,8 +1,8 @@
 # immutables
 
-[![Build Status](https://travis-ci.com/pwall567/immutables.svg?branch=main)](https://travis-ci.com/pwall567/immutables)
+[![Build Status](https://github.com/pwall567/immutables/actions/workflows/build.yml/badge.svg)](https://github.com/pwall567/immutables/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Maven Central](https://img.shields.io/maven-central/v/net.pwall.util/immutables?label=Maven%20Central)](https://search.maven.org/search?q=g:%22net.pwall.util%22%20AND%20a:%22immutables%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.jstuff/immutables?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.jstuff%22%20AND%20a:%22immutables%22)
 
 High-performance immutable collections
 
@@ -313,25 +313,25 @@ If more than 3 entries are specified, an `ImmutableMap` will be created.
 
 ## Dependency Specification
 
-The latest version of the library is 2.5, and it may be obtained from the Maven Central repository.
+The latest version of the library is 3.0, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
-      <groupId>net.pwall.util</groupId>
+      <groupId>io.jstuff</groupId>
       <artifactId>immutables</artifactId>
-      <version>2.5</version>
+      <version>3.0</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    implementation 'net.pwall.util:immutables:2.5'
+    implementation 'io.jstuff:immutables:3.0'
 ```
 ### Gradle (kts)
 ```kotlin
-    implementation("net.pwall.util:immutables:2.5")
+    implementation("io.jstuff:immutables:3.0")
 ```
 
 Peter Wall
 
-2024-02-18
+2025-01-28

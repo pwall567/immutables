@@ -2,6 +2,14 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [3.0] - 2025-01-28
+### Added
+- `build.yml`, `deploy.yml`: converted project to GitHub Actions
+### Changed
+- `pom.xml`: moved to `io.jstuff` (package amd Maven group)
+### Removed
+- `.travis.yml`
+
 ## [2.5] - 2024-02-18
 ### Changed
 - `ImmutableCollection`: fixed bug in indexed access
